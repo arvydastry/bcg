@@ -614,6 +614,9 @@ body.menu-open { overflow: hidden; }
 .marquee:hover .marquee__track { animation-play-state: paused; }
 .marquee__item { display: inline-flex; align-items: center; gap: 16px; padding: 0 28px; font-family: var(--f-head); font-weight: 600; font-size: 1.05rem; color: var(--ink-2); white-space: nowrap; }
 .marquee__item i { color: var(--amber); font-size: .7rem; }
+.marquee__flag { width: 26px; height: 26px; flex-shrink: 0; border-radius: 50%; box-shadow: 0 0 0 2px var(--white), 0 0 0 3px var(--line), 0 4px 10px rgba(12, 30, 51, .12); transition: transform .45s var(--ease); }
+.marquee__item--country { gap: 12px; }
+.marquee__item:hover .marquee__flag { transform: scale(1.15) rotate(-8deg); }
 .marquee--dark { background: var(--navy); border-color: rgba(255, 255, 255, .1); }
 .marquee--dark .marquee__item { color: #d7e0ea; }
 @keyframes marquee { to { transform: translateX(-50%); } }

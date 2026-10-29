@@ -144,7 +144,8 @@ Klientams – 6638576, 36772540, 8961146, 32845692; sričių skirtukai – 37663
 
 ## Šalių vėliavos
 
-`assets/img/flags/` – 8 apvalios (1:1) SVG vėliavos Klientams rinkų skilčiai: `gb-eng`, `gb-sct`, `gb-wls`, `ie`, `nl`, `se`, `no`, `dk`.
+`assets/img/flags/` – 11 apvalių (1:1) SVG vėliavų: `gb-eng`, `gb-sct`, `gb-wls`, `ie`, `nl`, `se`, `no`, `dk` (Klientams rinkos ir meniu),
+`gb`, `de`, `be` (pradžios judanti juosta kartu su `ie`, `nl`, `se`, `no`, `dk`).
 Šaltinis: [flag-icons](https://github.com/lipis/flag-icons) 7.2.3 (MIT licencija), parsisiųsta iš jsDelivr ir laikoma lokaliai.
 
 ## Kliento medžiaga (iš baltcontract.eu)
