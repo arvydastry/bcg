@@ -37,8 +37,6 @@
 .figure--doc .figure__caption { left: auto; right: 14px; bottom: 14px; }
 
 /* Rinkos: žymėjimas */
-.markets__legend { display: flex; flex-wrap: wrap; gap: 8px; }
-.markets__legend .chip i { font-size: .55rem; }
 .market strong .demo-note { font-size: .62rem; }
 
 /* Mygtukai centre tamsioje sekcijoje; CTA juostos antraštėlė */

@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
-  <link rel="stylesheet" href="assets/css/style.css?v=8">
+  <link rel="stylesheet" href="assets/css/style.css?v=9">
   <link rel="stylesheet" href="assets/css/p-apie-mus.css">
   <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -347,7 +347,7 @@
       </div>
     </section>
 
-    <!-- 7. Rinkos: Salient 4 kolonos Fancy Box (šalių kortelės) -->
+    <!-- 7. Rinkos: 2 grupės pagal įmonę × 4 Fancy Box su apvalia šalies vėliava (kaip Klientams) -->
     <section class="section" id="rinkos">
       <div class="container">
         <div class="section-head section-head--row">
@@ -355,20 +355,59 @@
             <p class="eyebrow">Rinkos</p>
             <h2 data-split>Aštuonios šalys, dvi įmonės</h2>
           </div>
-          <div class="markets__legend" aria-label="Žymėjimas">
-            <span class="chip chip--teal"><i class="ph ph-circle ph-fill"></i> Skanlika: Jungtinė Karalystė ir Airija</span>
-            <span class="chip"><i class="ph ph-circle ph-fill"></i> BCG: Skandinavija ir Beniliuksas</span>
-          </div>
+          <a class="link-u" href="klientams.html#rinkos">Ką darome kiekvienoje rinkoje <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
         </div>
-        <div class="markets" data-stagger>
-          <div class="market market--skanlika"><span class="market__flag">Skanlika</span><strong>Anglija</strong><span>Statybų pramonė, metalo konstrukcijos ir laivų remontas nuo 2003 m.</span></div>
-          <div class="market market--skanlika"><span class="market__flag">Skanlika</span><strong>Škotija</strong><span>Laivų statyklos ir metalo konstrukcijų montavimas.</span></div>
-          <div class="market market--skanlika"><span class="market__flag">Skanlika</span><strong>Velsas</strong><span>Statybos ir renovacijos projektai.</span></div>
-          <div class="market market--skanlika"><span class="market__flag">Skanlika</span><strong>Airija</strong><span>Statybų pramonė ir metalo konstrukcijos ES rinkoje be darbo leidimų.</span></div>
-          <div class="market"><span class="market__flag">BCG</span><strong>Nyderlandai</strong><span>Pagrindinė rinka: laivų ir jachtų statyba, naftos ir chemijos pramonė. KvK registracija, VCA.</span></div>
-          <div class="market"><span class="market__flag">BCG</span><strong>Švedija</strong><span>Elektros instaliacija, statyba ir pramonės objektai.</span></div>
-          <div class="market"><span class="market__flag">BCG</span><strong>Norvegija <span class="demo-note" title="Patikslinti su klientu">tikslinama</span></strong><span>Laivų statyba ir remontas, naftos ir dujų pramonė.</span></div>
-          <div class="market"><span class="market__flag">BCG</span><strong>Danija <span class="demo-note" title="Patikslinti su klientu">tikslinama</span></strong><span>Laivų remontas ir metalo konstrukcijos.</span></div>
+        <div class="market-groups">
+          <div class="market-group market-group--skanlika">
+            <div class="market-group__head">
+              <img class="market-group__logo" src="assets/img/logo/skanlika-ink.png" alt="Skanlika" width="100" height="24">
+              <span class="market-group__tag">Jungtinė Karalystė ir Airija · nuo 2003 m.</span>
+              <span class="chip chip--teal market-group__count">4 šalys</span>
+            </div>
+            <div class="markets markets--flags" data-stagger>
+            <div class="market market--skanlika">
+              <div class="market__top"><span class="market__flagimg"><img src="assets/img/flags/gb-eng.svg" alt="" width="56" height="56" loading="lazy"></span><div><span class="market__flag">Jungtinė Karalystė</span><strong>Anglija</strong></div></div>
+              <p class="market__desc">Statybų pramonė, metalo konstrukcijos ir laivų remontas nuo 2003 m.</p>
+            </div>
+            <div class="market market--skanlika">
+              <div class="market__top"><span class="market__flagimg"><img src="assets/img/flags/gb-sct.svg" alt="" width="56" height="56" loading="lazy"></span><div><span class="market__flag">Jungtinė Karalystė</span><strong>Škotija</strong></div></div>
+              <p class="market__desc">Laivų statyklos ir metalo konstrukcijų montavimas.</p>
+            </div>
+            <div class="market market--skanlika">
+              <div class="market__top"><span class="market__flagimg"><img src="assets/img/flags/gb-wls.svg" alt="" width="56" height="56" loading="lazy"></span><div><span class="market__flag">Jungtinė Karalystė</span><strong>Velsas</strong></div></div>
+              <p class="market__desc">Statybos ir renovacijos projektai.</p>
+            </div>
+            <div class="market market--skanlika">
+              <div class="market__top"><span class="market__flagimg"><img src="assets/img/flags/ie.svg" alt="" width="56" height="56" loading="lazy"></span><div><span class="market__flag">Airija</span><strong>Airija</strong></div></div>
+              <p class="market__desc">Statybų pramonė ir metalo konstrukcijos ES rinkoje be darbo leidimų.</p>
+            </div>
+            </div>
+          </div>
+          <div class="market-group">
+            <div class="market-group__head">
+              <img class="market-group__logo" src="assets/img/logo/bcg-ink.png" alt="Baltic Contracting Group" width="170" height="24">
+              <span class="market-group__tag">Beniliuksas ir Skandinavija · nuo 2013 m.</span>
+              <span class="chip market-group__count">4 šalys</span>
+            </div>
+            <div class="markets markets--flags" data-stagger>
+            <div class="market">
+              <div class="market__top"><span class="market__flagimg"><img src="assets/img/flags/nl.svg" alt="" width="56" height="56" loading="lazy"></span><div><span class="market__flag">Beniliuksas</span><strong>Nyderlandai</strong></div></div>
+              <p class="market__desc">Pagrindinė rinka: laivų ir jachtų statyba, naftos ir chemijos pramonė. KvK registracija, VCA.</p>
+            </div>
+            <div class="market">
+              <div class="market__top"><span class="market__flagimg"><img src="assets/img/flags/se.svg" alt="" width="56" height="56" loading="lazy"></span><div><span class="market__flag">Skandinavija</span><strong>Švedija</strong></div></div>
+              <p class="market__desc">Elektros instaliacija, statyba ir pramonės objektai.</p>
+            </div>
+            <div class="market">
+              <div class="market__top"><span class="market__flagimg"><img src="assets/img/flags/no.svg" alt="" width="56" height="56" loading="lazy"></span><div><span class="market__flag">Skandinavija</span><strong>Norvegija <span class="demo-note" title="Patikslinti su klientu">tikslinama</span></strong></div></div>
+              <p class="market__desc">Laivų statyba ir remontas, naftos ir dujų pramonė.</p>
+            </div>
+            <div class="market">
+              <div class="market__top"><span class="market__flagimg"><img src="assets/img/flags/dk.svg" alt="" width="56" height="56" loading="lazy"></span><div><span class="market__flag">Skandinavija</span><strong>Danija <span class="demo-note" title="Patikslinti su klientu">tikslinama</span></strong></div></div>
+              <p class="market__desc">Laivų remontas ir metalo konstrukcijos.</p>
+            </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -514,6 +553,6 @@
     </div>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="assets/js/main.js?v=8"></script>
+  <script src="assets/js/main.js?v=9"></script>
 </body>
 </html>
