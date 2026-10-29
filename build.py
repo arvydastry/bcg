@@ -9,7 +9,7 @@ import json, os, re, sys, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent
 PARTS = ROOT / "_parts"
 BODY = ROOT / "_body"
-VERSION = "5"
+VERSION = "6"
 
 def read(p):
     return (PARTS / p).read_text(encoding="utf-8")
