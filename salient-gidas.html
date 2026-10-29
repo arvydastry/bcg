@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salient gidas: BCG + Skanlika maketo perkėlimas į WordPress</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root { --ink:#0F1720; --muted:#5E6B7A; --line:#D9E0E8; --paper:#F4F6F9; --mist:#E9EEF4; --blue:#1B4E9B; --navy:#0C1E33; --amber:#F2A93B; --teal:#0F7C7A; --ok:#1E8E5A; }
+  * { box-sizing: border-box; }
+  body { margin:0; font: 16px/1.6 "Instrument Sans", system-ui, sans-serif; color: var(--ink); background: var(--paper); }
+  a { color: var(--blue); }
+  .top { background: var(--navy); color:#fff; padding: 40px 0 32px; }
+  .top .wrap { display:flex; flex-wrap:wrap; gap:24px; align-items:flex-end; justify-content:space-between; }
+  .top h1 { font-family:"Schibsted Grotesk", sans-serif; font-size: clamp(1.8rem, 1.2rem + 2vw, 2.8rem); margin:0 0 8px; letter-spacing:-.02em; }
+  .top p { margin:0; color:#b7c3d0; max-width:720px; }
+  .top .tag { display:inline-block; background: var(--amber); color: var(--ink); font-weight:700; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border-radius:4px; margin-bottom:12px; }
+  .wrap { width:min(100% - 40px, 1180px); margin-inline:auto; }
+  .layout { display:grid; grid-template-columns: 260px 1fr; gap: 40px; padding: 40px 0 80px; align-items:start; }
+  .toc { position: sticky; top: 20px; background:#fff; border:1px solid var(--line); border-radius: 14px; padding: 16px; font-size:.9rem; }
+  .toc strong { display:block; margin-bottom:8px; font-family:"Schibsted Grotesk", sans-serif; }
+  .toc a { display:block; padding: 5px 8px; border-radius:8px; color: var(--ink); text-decoration:none; }
+  .toc a:hover { background: var(--mist); color: var(--blue); }
+  .toc a.sub { padding-left: 20px; color: var(--muted); font-size:.85rem; }
+  main h2 { font-family:"Schibsted Grotesk", sans-serif; font-size: 1.7rem; letter-spacing:-.02em; margin: 56px 0 14px; padding-top: 16px; border-top: 3px solid var(--amber); scroll-margin-top: 20px; }
+  main h2:first-child { margin-top: 0; }
+  main h3 { font-family:"Schibsted Grotesk", sans-serif; font-size: 1.2rem; margin: 30px 0 10px; scroll-margin-top: 20px; }
+  main h4 { margin: 20px 0 8px; font-size: 1rem; }
+  table { width:100%; border-collapse: collapse; background:#fff; border:1px solid var(--line); border-radius: 12px; overflow:hidden; font-size:.92rem; margin: 12px 0 20px; }
+  th, td { text-align:left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { background: var(--mist); font-family:"Schibsted Grotesk", sans-serif; font-weight:600; }
+  tr:last-child td { border-bottom:0; }
+  td:first-child { font-weight: 600; width: 26%; }
+  code, pre { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .85em; }
+  code { background: var(--mist); padding: 1px 6px; border-radius: 5px; }
+  pre { background: #0F1A2A; color: #DCE6F6; padding: 16px 18px; border-radius: 12px; overflow:auto; line-height:1.5; }
+  pre code { background: none; padding:0; color: inherit; }
+  .note { border-left: 4px solid var(--amber); background:#fff; padding: 12px 16px; border-radius: 0 12px 12px 0; margin: 14px 0; }
+  .note--blue { border-color: var(--blue); }
+  .note--ok { border-color: var(--ok); }
+  .sw { display:inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; border:1px solid rgba(0,0,0,.1); }
+  ul { padding-left: 1.2em; } li { margin: 3px 0; }
+  .cols { display:grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .card h4 { margin-top: 0; }
+  .chk li { list-style: none; position: relative; padding-left: 26px; }
+  .chk li::before { content:"☐"; position:absolute; left:0; top:0; color: var(--blue); }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .toc { position: static; } .cols { grid-template-columns: 1fr; } td:first-child { width: auto; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div>
+      <span class="tag">Įgyvendinimo gidas</span>
+      <h1>BCG + Skanlika: maketo perkėlimas į WordPress su Salient</h1>
+      <p>Kaip demo maketą (index, klientams, veiklos-sritys, karjera, apie-mus, kontaktai) surinkti Salient tema ir WPBakery: įskiepiai, Theme Options, kiekvieno puslapio eilutės ir elementai, formos, kalbos, papildomas CSS, nuotraukos, 301 ir paleidimo sąrašas.</p>
+    </div>
+    <div><a href="index.html" style="color:#fff">← Grįžti į maketą</a></div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="toc" aria-label="Turinys">
+    <strong>Turinys</strong>
+    <a href="#maketas">1. Kaip naudotis maketu</a>
+    <a href="#kryptis">2. Dizaino kryptis</a>
+    <a href="#iskiepiai">3. Įskiepiai</a>
+    <a href="#theme-options">4. Theme Options</a>
+    <a href="#header">5. Antraštė, meniu, poraštė</a>
+    <a href="#global">6. Global Sections</a>
+    <a href="#puslapiai">7. Puslapiai eilutė po eilutės</a>
+    <a class="sub" href="#p-index">Pradžia</a>
+    <a class="sub" href="#p-klientams">Klientams</a>
+    <a class="sub" href="#p-sritys">Veiklos sritys</a>
+    <a class="sub" href="#p-karjera">Karjera</a>
+    <a class="sub" href="#p-apie">Apie mus</a>
+    <a class="sub" href="#p-kontaktai">Kontaktai</a>
+    <a href="#formos">8. Formos (Contact Form 7)</a>
+    <a href="#kalbos">9. Kalbos: LT, EN, DE</a>
+    <a href="#css">10. Papildomas CSS ir JS</a>
+    <a href="#media">11. Nuotraukos ir video</a>
+    <a href="#seo">12. SEO, 301, struktūriniai duomenys</a>
+    <a href="#klientui">13. Patikslinti su klientu</a>
+    <a href="#paleidimas">14. Paleidimo kontrolinis sąrašas</a>
+  </nav>
+
+  <main>
+    <h2 id="maketas">1. Kaip naudotis maketu</h2>
+    <ul>
+      <li><strong>Maketas rodomas be demo juostos</strong> – taip, kaip matys lankytojas. Šis gidas pasiekiamas tiesiogiai adresu <code>salient-gidas.html</code> (meniu nuorodos į jį nėra).</li>
+      <li><strong>Formos duomenų nesiunčia</strong>: tik patikrina privalomus laukus ir parodo sėkmės būseną. WordPress'e jas pakeičia Contact Form 7 (8 skyrius).</li>
+      <li><strong>Kalbų jungiklis LT / EN / DE</strong> rodo tik pranešimą. Vertimai – pilname projekte per WPML (9 skyrius).</li>
+      <li><strong>Žemėlapis</strong> kontaktų puslapyje įkeliamas tik paspaudus mygtuką (OpenStreetMap, be slapukų iki paspaudimo).</li>
+      <li>Elementai su žyma <span style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:#D98F1F;border:1px dashed currentColor;padding:1px 6px;border-radius:4px">tikslinama</span> arba „Pavyzdys“ – išgalvoti demo reikmėms, juos reikia patvirtinti su klientu (13 skyrius).</li>
+      <li>Visi efektai paiso <code>prefers-reduced-motion</code>; be JavaScript turinys taip pat matomas.</li>
+      <li>Puslapiai surenkami komanda <code>python3 build.py</code> iš <code>_parts/</code> (bendros dalys) ir <code>_body/</code> (turinys). Sugeneruotų <code>*.html</code> ranka neredaguoti.</li>
+    </ul>
+
+    <h2 id="kryptis">2. Dizaino kryptis „Šiaurės jūra“</h2>
+    <p>Dvi įmonės po vienu stogu, pramonė be agresyvių spalvų: šviesus rūko fonas, gili uosto mėlyna tamsioms sekcijoms, kliento logotipo mėlyna veiksmams ir vienas šiltas gintaro akcentas. Daug oro, apvalinti kampai, piliulės mygtukai, ramus judesys. Atitikmenys Salient demo: <em>Business 3</em> (korporatyvinė struktūra), <em>SaaS</em> (hero ritmas ir kortelės), <em>Architect</em> (nuotraukų blokai su paralaksu).</p>
+    <h3>Spalvos</h3>
+    <table>
+      <tr><th>Rolė</th><th>HEX</th><th>Salient Theme Options</th><th>Naudojimas</th></tr>
+      <tr><td><span class="sw" style="background:#F4F6F9"></span>Rūkas (paper)</td><td>#F4F6F9</td><td>General Settings → Background color</td><td>Pagrindinis fonas</td></tr>
+      <tr><td><span class="sw" style="background:#E9EEF4"></span>Migla (mist)</td><td>#E9EEF4</td><td>Row → Background color</td><td>Antrinės sekcijos</td></tr>
+      <tr><td><span class="sw" style="background:#0C1E33"></span>Uostas (navy)</td><td>#0C1E33</td><td>Extra Color 3; Row BG tamsioms sekcijoms, Footer</td><td>Karjera, poraštė, modelio „Subranga“ kortelė</td></tr>
+      <tr><td><span class="sw" style="background:#1B4E9B"></span>BCG mėlyna</td><td>#1B4E9B</td><td><strong>Accent Color</strong></td><td>Mygtukai, nuorodos, ikonos. Paimta iš kliento logotipo.</td></tr>
+      <tr><td><span class="sw" style="background:#F2A93B"></span>Gintaras (amber)</td><td>#F2A93B</td><td>Extra Color 1</td><td>Pagrindinis CTA tamsiame fone, pabraukimai, eyebrow brūkšnelis, skaitiklių priedai</td></tr>
+      <tr><td><span class="sw" style="background:#0F7C7A"></span>Jūra (teal)</td><td>#0F7C7A</td><td>Extra Color 2</td><td>Skanlika akcentas (kortelės viršaus linija, chip žymos). Pasiūlymas, derinti su klientu.</td></tr>
+      <tr><td><span class="sw" style="background:#0F1720"></span>Tekstas</td><td>#0F1720 / #5E6B7A</td><td>Typography → Body font color</td><td>Pagrindinis / pagalbinis tekstas</td></tr>
+    </table>
+    <h3>Šriftai</h3>
+    <table>
+      <tr><th>Rolė</th><th>Šriftas</th><th>Salient</th></tr>
+      <tr><td>Antraštės</td><td>Schibsted Grotesk 700–800, letter-spacing −0.02em</td><td>Typography → Headings: Google Font „Schibsted Grotesk“, Latin Extended subset</td></tr>
+      <tr><td>Tekstas, meniu, mygtukai</td><td>Instrument Sans 400–600</td><td>Typography → Body, Navigation, Buttons</td></tr>
+    </table>
+    <div class="note">Lietuviški rašmenys: abiejuose šriftuose yra <code>latin-ext</code> rinkinys. Patikrinkite „ū Ū ą č ę ė į š ų ž“ po diegimo. Jei Chrome rodo „jušų“ vietoje „jūsų“, šriftus talpinkite vienu pilnu woff2 failu per child temą (ne skaidytus subset'us).</div>
+    <h3>Formos ir judesys</h3>
+    <ul>
+      <li>Konteineris 1240 px; kortelės 18–24 px kampais; mygtukai ir žymos – piliulės (999 px); laukeliai 12 px.</li>
+      <li>Šešėliai sluoksniuoti, labai švelnūs; tamsiose sekcijose – permatomos baltos kortelės (6–10 % baltumo) be šešėlių.</li>
+      <li>Judesys: Animate on scroll (fade in from bottom, stagger 90 ms), Split Line Heading antraštėms, Mask Reveal nuotraukoms, Column Parallax, Milestone skaitikliai, Scrolling Text juosta, 3D tilt kortelėms (tik desktop), Toggles. Viskas paiso <code>prefers-reduced-motion</code>.</li>
+      <li>Hover efektai (v2): mygtukų blizgesys, kortelių pakilimas su šešėliu, ikonų pasisukimas ir užpildymas, nuotraukų priartėjimas (Image hover: Zoom), eigos kortelių fono nuotrauka užvedus (Fancy Box „Color Box Hover“), video kortelės groja užvedus, specialybių miniatiūros iš nespalvotos tampa spalvota, laiko juostos taško pulsavimas. Lietimo įrenginiuose tie patys elementai rodomi statiškai (nuotrauka matoma iš karto, video groja, kai kortelė matoma).</li>
+      <li>Fonai vientisi, be tekstūrų ir pattern'ų.</li>
+    </ul>
+
+    <h2 id="iskiepiai">3. Įskiepiai</h2>
+    <table>
+      <tr><th>Įskiepis</th><th>Kam</th></tr>
+      <tr><td>Salient Core, Salient WPBakery Page Builder, Salient Widgets, Salient Social</td><td>Temos branduolys, elementai (Split Line Heading, Milestone, Scrolling Text, Fancy Box, Toggles ir kt.)</td></tr>
+      <tr><td>Contact Form 7 + Flamingo</td><td>Abi formos (užsakovams, darbuotojams su CV priedu) ir užklausų žurnalas</td></tr>
+      <tr><td>CF7 Honeypot arba reCAPTCHA v3</td><td>Apsauga nuo šlamšto be CAPTCHA paveikslėlių</td></tr>
+      <tr><td>WPML (Multilingual CMS + String Translation + CF7 Multilingual)</td><td>LT / EN / DE versijos, meniu, formų ir Theme Options tekstų vertimas (alternatyva: Polylang Pro)</td></tr>
+      <tr><td>Complianz arba CookieYes</td><td>Slapukų sutikimas trimis kalbomis (maketo slapukų kortelę atitinka Complianz „Minimal“ stilius)</td></tr>
+      <tr><td>Rank Math arba Yoast SEO</td><td>Title/description, sitemap, 301 nukreipimai, hreflang per WPML</td></tr>
+      <tr><td>CPT UI + ACF (nebūtina)</td><td>Jei darbo pasiūlymus norima pildyti kaip įrašus su laukais (šalis, atlyginimas, įmonė) ir rodyti per Post Grid su filtru. Paprastesnis kelias: Toggles Global Section (7.4 skyrius).</td></tr>
+      <tr><td>Leaflet Map Block (arba Salient „Map“ su Google raktu)</td><td>Kontaktų žemėlapis; maketo variantas – OpenStreetMap be rakto ir be slapukų iki paspaudimo</td></tr>
+      <tr><td>LiteSpeed Cache / WP Rocket, ShortPixel</td><td>Greitaveika, WebP</td></tr>
+    </table>
+    <div class="note note--blue">Nenaudoti: Revolution Slider ir Meta Slider (buvo senoje svetainėje). Hero video sprendžiamas Salient eilutės video fonu.</div>
+
+    <h2 id="theme-options">4. Theme Options</h2>
+    <table>
+      <tr><th>Skiltis</th><th>Nustatymai</th></tr>
+      <tr><td>General Settings</td><td>Accent Color #1B4E9B · Extra Color 1 #F2A93B · Extra Color 2 #0F7C7A · Extra Color 3 #0C1E33 · Background #F4F6F9 · Theme Skin: <strong>Material</strong> · Form style: Minimal · Button styling: <strong>Default</strong> (piliulę darome CSS, žr. 10 sk.) · Fancy select: išjungta · Smooth scrolling: išjungta · Page transitions: išjungta</td></tr>
+      <tr><td>Typography</td><td>Headings: Schibsted Grotesk; h1 clamp iki 64 px (hero 68 px), h2 iki 48 px, h3 25 px, line-height 1.08, letter-spacing −0.02em · Body: Instrument Sans 17 px / 1.6 · Navigation: Instrument Sans 600 15.5 px · Buttons: Schibsted Grotesk 600</td></tr>
+      <tr><td>Header Navigation</td><td>Layout: Standard, logo kairėje · Logo: bendras BCG + Skanlika blokas (SVG, šviesi ir tamsi versijos) · <strong>Transparent header</strong>: on (šviesus logotipas ir meniu virš tamsaus hero) · Sticky: on, <strong>Shrink on scroll</strong> (84 → 68 px) · Hide header on scroll down: on · Dropdown style: „Minimal“, mega meniu punktui „Klientams“ (4 kortelės su ikonomis) · Secondary header: išjungtas (telefonas ir CTA dedami į meniu kaip „Button“ punktą)</td></tr>
+      <tr><td>Header: mygtukas</td><td>Menu Item „Gauti pasiūlymą“ → Salient „Button style“ (Accent color, pill per CSS) · Telefonas kaip meniu punktas su ikona (ph-phone) · Kalbos: WPML jungiklis „Menu language switcher“ (10 sk. CSS piliulė)</td></tr>
+      <tr><td>Off Canvas Menu</td><td>Style: <strong>Fullscreen</strong>, tamsus fonas #0C1E33, animacija „Simple“; apačioje: kalbos, mygtukai „Gauti pasiūlymą“ (Extra Color 1) ir „Siųsti CV“, telefonas. Mobile breakpoint: 1000 px.</td></tr>
+      <tr><td>Footer</td><td>4 kolonos (1,6 / 1 / 1 / 1,3): logotipai + tekstas + sertifikatų žymos · Svetainė · Greitai · Kontaktai; Footer BG #0C1E33; Bottom bar: © tekstas, nuorodos, kalbų jungiklis. Abiejų įmonių rekvizitai – Global Section virš bottom bar (6 sk.).</td></tr>
+      <tr><td>Page Header</td><td>Vidiniams puslapiams: BG image + Parallax, Text align left, Height 480 px, Overlay gradientas (CSS 10 sk.), Fullscreen: off; crumbs – Breadcrumbs: on (Rank Math).</td></tr>
+      <tr><td>Blog / Portfolio</td><td>Nenaudojama (nėra naujienų). Portfolio išjungtas.</td></tr>
+    </table>
+
+    <h2 id="header">5. Antraštė, meniu ir poraštė</h2>
+    <h3>Meniu struktūra</h3>
+    <table>
+      <tr><th>Punktas</th><th>Nuoroda</th><th>Pastabos</th></tr>
+      <tr><td>Klientams ▾</td><td>/klientams/</td><td>Mega meniu (Salient Mega Menu, 1 eilutė, 4 kolonos): Subranga (#subranga), Personalo nuoma (#personalo-nuoma), Specialistai (#specialistai), Kaip dirbame (#eiga). Kiekviena kolona – ikona (Phosphor/Salient ikonų rinkinys), pavadinimas, 1 sakinys. Apačioje tekstas „Dvi įmonės, viena komanda…“ + nuoroda „Gauti pasiūlymą“.</td></tr>
+      <tr><td>Veiklos sritys ▾</td><td>/veiklos-sritys/</td><td>Paprastas išskleidžiamas meniu su 5 inkarais ir ikonomis.</td></tr>
+      <tr><td>Karjera</td><td>/karjera/</td><td></td></tr>
+      <tr><td>Apie mus</td><td>/apie-mus/</td><td></td></tr>
+      <tr><td>Kontaktai</td><td>/kontaktai/</td><td></td></tr>
+      <tr><td>LT · EN · DE</td><td>WPML</td><td>Piliulė, aktyvi kalba tamsi</td></tr>
+      <tr><td>+370 46 310637</td><td>tel:</td><td>Ikona + numeris, nuo 1380 px žemyn – tik ikona</td></tr>
+      <tr><td>Gauti pasiūlymą</td><td>/kontaktai/#uzklausa</td><td>Mygtukas; virš tamsaus hero – gintaro spalvos, slenkant – mėlynas</td></tr>
+    </table>
+    <h3>Logotipas iš dviejų ženklų</h3>
+    <p>Makete antraštėje rodomi abu logotipai su plonu skirtuku (BCG · Skanlika). Salient priima vieną logotipo paveikslėlį, todėl parengiami du SVG: <code>lockup-dark.svg</code> (tamsūs ženklai šviesiai antraštei) ir <code>lockup-light.svg</code> (balti ženklai permatomai antraštei; Theme Options → Header → „Transparent header logo“). Mobiliesiems (iki 420 px) – trečias, kompaktiškas variantas (Header → „Mobile logo“). <strong>Reikia kliento vektorinių logotipų</strong>: makete naudojami PNG, iškirpti iš senos svetainės bendro failo.</p>
+    <h3>Poraštė</h3>
+    <p>Kolonos kaip makete. Rekvizitų juosta (abi įmonės: pavadinimas, įm. kodas, PVM kodas, KvK) – Global Section „GS-Rekvizitai“, įterpiama per Footer → „Custom footer content above bottom bar“ arba WPBakery Footer Builder. Mobilus apatinis baras „Skambinti / Užklausa / Siųsti CV“ – Global Section su CSS <code>position: fixed</code> (10 sk.), rodomas iki 900 px.</p>
+
+    <h2 id="global">6. Global Sections (pasikartojantys blokai)</h2>
+    <table>
+      <tr><th>Global Section</th><th>Turinys</th><th>Kur naudojama</th></tr>
+      <tr><td>GS-Užklausa</td><td>2 kolonos: Tabs (Salient „Tabbed Section“, stilius „Minimal“) su dviem CF7 formomis + dešinėje 4 kortelės (atsakymo pažadas, BCG kontaktai, Skanlika kontaktai, biuras)</td><td>Pradžia (#uzklausa), Kontaktai (#uzklausa)</td></tr>
+      <tr><td>GS-Užklausa-klientams</td><td>Tik užsakovų forma + kortelės</td><td>Klientams (#uzklausa)</td></tr>
+      <tr><td>GS-CV</td><td>Darbuotojų forma su failo priedu + kortelės „Kas vyksta po CV“, „Personalo klausimais“</td><td>Karjera (#cv)</td></tr>
+      <tr><td>GS-Sertifikatai</td><td>5 kortelės su logotipais (VCA, VCU, NEN 4400-1, KvK, Stipriausi Lietuvoje) – Salient „Clients“ elementas, 5 kolonos, grayscale → spalva užvedus</td><td>Pradžia, Apie mus, Klientams</td></tr>
+      <tr><td>GS-Kvietimas-užsakovams</td><td>Call To Action eilutė su fono nuotrauka + paralaksu: „Aptarkime jūsų projektą“ → Kontaktai</td><td>Veiklos sritys, Apie mus</td></tr>
+      <tr><td>GS-Kvietimas-darbuotojams</td><td>CTA eilutė „Ieškote darbo užsienyje?“ → Karjera</td><td>Kontaktai, Klientams (pasirinktinai)</td></tr>
+      <tr><td>GS-Darbo-pasiūlymai</td><td>Toggles su darbo pasiūlymais (arba Post Grid, jei CPT)</td><td>Karjera (#pasiulymai), Pradžia (3 pirmi)</td></tr>
+      <tr><td>GS-Rekvizitai</td><td>Abiejų įmonių rekvizitai</td><td>Poraštė</td></tr>
+      <tr><td>GS-Mobile-bar</td><td>3 mygtukai: Skambinti / Užklausa / Siųsti CV</td><td>Visuose puslapiuose (Footer → before closing body)</td></tr>
+    </table>
+
+    <h2 id="puslapiai">7. Puslapiai eilutė po eilutės</h2>
+    <p>Lentelėse: maketo sekcija → Salient / WPBakery elementas ir pagrindiniai nustatymai. „Animate“ reiškia elemento „Animate on scroll: Fade In From Bottom“ su 90–120 ms delsa tarp kolonų.</p>
+
+    <h3 id="p-index">7.1 Pradžia (index.html)</h3>
+    <table>
+      <tr><th>Sekcija</th><th>Salient elementas ir nustatymai</th></tr>
+      <tr><td>Hero su video</td><td>Row: Full Screen (min-height 100vh), Video Background (mp4 iš savo serverio, poster – kadras), Overlay gradient (CSS <code>.hero__bg::after</code>), Content position: bottom. Kolonos 7/12 + 5/12. Kairėje: Label (eyebrow su tašku – Raw HTML), <strong>Split Line Heading</strong> h1 + <strong>Highlighted Text</strong> žodžiui „komandos“ (Extra Color 1), tekstas, 2 mygtukai (Extra Color 1 + Transparent white). Dešinėje: 2 „Fancy Box“ (Style: Hover Color, BG rgba(255,255,255,.08), ikona, pavadinimas, aprašymas, rodyklė) → /klientams/ ir /karjera/. Apačioje eilutė su 4 <strong>Milestone</strong> (20+, 5, 2, 100 %), Divider su 12 % baltumo linija. Video pauzės mygtukas – Salient video fono „Pause button“ parinktis.</td></tr>
+      <tr><td>Judanti juosta</td><td><strong>Scrolling Text</strong>: 13 punktų, greitis „Slow“, pauzė užvedus, skirtukas – oranžinis taškas (CSS).</td></tr>
+      <tr><td>Dvi įmonės. Viena komanda.</td><td>Row (balta): Split Line Heading centre + Highlighted Text (Extra Color 2 šviesus variantas), lead. 2 kolonos su „Fancy Box“ (Style: Default, BG image su overlay, Content position: bottom) arba Image With Animation (Mask Reveal) + tekstas; kortelės viršuje 5 px spalvos linija (CSS klasė <code>duo__card--skanlika</code> / <code>--bcg</code>); „Nuo 2003 m.“ – Label. Faktai – Raw HTML <code>dl</code>. Apvali žyma „Viena komanda Klaipėdoje“ tarp kolonų – Raw HTML, absoliučiai pozicionuojama (CSS). Pastaba apačioje – Fancy Box su ikona.</td></tr>
+      <tr><td>Du bendradarbiavimo modeliai</td><td>Row (BG #E9EEF4). 2 kolonos: kairė – Column BG #0C1E33 (tamsi kortelė), dešinė – balta su rėmeliu. Kiekvienoje: Icon (Phosphor / Linea), h3, pastraipa, Icon List (žalios varnelės; tamsioje – gintaro), Divider, mygtukas. Didelis numeris 01/02 – Raw HTML su CSS. Viršuje – nuotraukos juosta 21:9 (Column BG image arba Image, Image hover: Zoom + saturate), ikona užeina ant nuotraukos ir užvedus pasisuka. Column hover: „Translate up“.</td></tr>
+      <tr><td>Veiklos sritys</td><td>Row: 6 stulpelių tinklelis: 2 × (1/2) + 3 × (1/3). <strong>Fancy Box</strong>, Style: <strong>Parallax Hover</strong>, BG image, Content position: bottom, min-height 400 / 340 px, Hover: aprašymas išsiskleidžia (CSS <code>.sector p</code>), numeris ir ikona – Label (CSS). Nuoroda į /veiklos-sritys/#id.</td></tr>
+      <tr><td>Darbas objektuose (video kortelės)</td><td>Row (balta), 4 kolonos <strong>Video Lightbox</strong> (Style: image + play icon, poster – kadras iš video, Lightbox: self-hosted mp4 su garsu). Makete video pradeda groti be garso užvedus pelę (lietimui – kai kortelė matoma ekrane) – tai 10 skyriaus JS (<code>data-hover-video</code>); grojant rodomas „ekvalaizerio“ ženkliukas, aprašymas išsiskleidžia. Spustelėjus atsidaro lightbox (<code>.vbox</code>, 10 sk.) – Salient Video Lightbox tai daro natūraliai. Video kortelių failai: 1280×720, iki 15 s, be garso, <code>preload="none"</code>.</td></tr>
+      <tr><td>Kaip dirbame (4 žingsniai)</td><td>Row (balta), Split Line Heading centre, 4 kolonos <strong>Icon With Text</strong> (Icon style: numbered circle – Raw HTML arba Salient „Nectar Icon“ su skaičiumi), laikas (Label, Extra Color 1), h3, tekstas; v2: kiekvienas žingsnis – <strong>Fancy Box</strong> (Style: Color Box Hover, BG image – fono nuotrauka, kuri pasirodo tik užvedus, Hover color – navy 90 %), viduje numeris (Nectar Icon su skaičiumi, užvedus – gintaras), laikas (Label), h3, tekstas tampa baltas. Lietimo įrenginiuose nuotrauka rodoma kortelės viršuje (CSS <code>@media (hover:none)</code>). Jungianti linija nebenaudojama.</td></tr>
+      <tr><td>Kodėl rinktis mus</td><td>4 kolonos Icon With Text (Default, ikona kairėje viršuje, pastelinė BG), Column hover „Translate up + shadow“. Po to <strong>GS-Sertifikatai</strong>.</td></tr>
+      <tr><td>Darbuotojams (tamsi)</td><td>Row BG #0C1E33. Kairė kolona: eyebrow, Split Line Heading, lead, 2×2 Icon With Text kortelės (BG 6 % balta), mygtukai. Dešinė: <strong>Toggles</strong> (Style: Minimal, tamsus) su 3 pasiūlymais; summary: 60 px miniatiūra (Raw HTML <code>.job__img</code>, užvedus priartėja), pavadinimas, meta (ikonos + tekstas), atlyginimas; turinys 3 kolonomis (Raw HTML arba Inner Row). Alternatyva – GS-Darbo-pasiūlymai (Post Grid, 3 naujausi).</td></tr>
+      <tr><td>Partneriai apie mus</td><td><strong>Testimonial Slider</strong> (Style: Minimal, 3 vienu metu, be autoplay, Image: portretas 44 px) arba 3 Fancy Box. Užvedus kortelė pakyla, portretas priartėja, rėmelis tampa gintaro. Portretai makete – Pexels, keistini tikrais. Žyma „Pavyzdys“ – tik makete.</td></tr>
+      <tr><td>Dažni klausimai</td><td><strong>Toggles</strong> (Style: Minimal, Icon: plus, vienas atidarytas). 6 klausimai.</td></tr>
+      <tr><td>Susisiekite</td><td><strong>GS-Užklausa</strong>.</td></tr>
+    </table>
+
+    <h3 id="p-klientams">7.2 Klientams (klientams.html)</h3>
+    <table>
+      <tr><th>Sekcija</th><th>Salient elementas</th></tr>
+      <tr><td>Page Header</td><td>Theme Options Page Header su <strong>Video Background</strong> (mp4 1280×720 + poster; makete Pexels 8964378) ir overlay; mobiliajame galima rodyti tik poster („Disable video on mobile“). Pauzės mygtukas viršuje dešinėje (<code>.video-toggle</code>). h1 Split Line Heading; mygtukai „Gauti pasiūlymą“ (Extra Color 1) ir „Skambinti“ (Transparent white).</td></tr>
+      <tr><td>#kam-skirta</td><td>4 kolonos <strong>Fancy Box</strong> (Style: Default, balta BG, rėmelis): viršuje nuotrauka 16:9 (Image hover: Zoom + saturate), ikona užeina ant nuotraukos krašto (CSS <code>.card--img .card__icon</code>), užvedus kortelė pakyla, ikona užsipildo mėlynai.</td></tr>
+      <tr><td>#subranga</td><td>Row balta, 2 kolonos. Kairė – <strong>Column Sticky</strong> su medijos bloku: Salient „Video Player“ (self-hosted mp4, autoplay, muted, loop, be valdiklių; makete groja tik kai matomas – 10 sk. JS <code>data-inview-video</code>), ant jo – žyma „Darbų vadovas objekte“ (Raw HTML) ir išskleidimo mygtukas į <strong>Video Lightbox</strong>; po juo 2 Image With Animation 16:10 su užrašais (Image hover: Zoom). Makete: Pexels video 33880927, nuotraukos 6638576 ir 36772540. Dešinė – tekstas: eyebrow, h2, pastraipa, Icon List „Kas įeina“, „Kada rinktis“, „Kaip apmokama“, mygtukas → /kontaktai/?tipas=subranga#uzklausa.</td></tr>
+      <tr><td>#personalo-nuoma</td><td>Tas pats veidrodiškai (Row: Reverse column order on mobile), BG #E9EEF4. Video – specialistai užsakovo gamykloje (Pexels 32243444), žyma „Nuo 1 specialisto iki komandos“, nuotraukos 8961146 ir 32845692.</td></tr>
+      <tr><td>#palyginimas</td><td>Raw HTML lentelė su klase <code>compare</code> (CSS 10 sk.) arba TablePress su custom CSS.</td></tr>
+      <tr><td>#specialistai</td><td>12 kortelių 4 kolonomis – Raw HTML <code>.specialists</code> (arba Icon With Text su Image vietoje ikonos): apvali 54 px nuotrauka (Pexels, nespalvota → spalvota užvedus), ikonos ženkliukas kampe (užvedus – gintaras), pavadinimas ir sertifikatų eilutė mažu šriftu.</td></tr>
+      <tr><td>#eiga ir #atitiktis</td><td>4 žingsniai kaip pradžioje – Fancy Box su fono nuotrauka užvedus (galima Global Section „GS-Eiga“). Po jų tamsi eilutė „Dokumentai ir atitiktis“: Icon List 2 kolonomis + sertifikatų žymos.</td></tr>
+      <tr><td>#rinkos</td><td>Dvi grupės pagal įmonę: antraštė (įmonės logotipas, „Jungtinė Karalystė ir Airija · nuo 2003 m.“ / „Beniliuksas ir Skandinavija · nuo 2013 m.“, žyma „4 šalys“) ir 4 kortelės (Fancy Box, Style: Default) 4 kolonomis. Kiekvienoje kortelėje – apvali šalies vėliava 52 px (Image, 1:1, iš <code>assets/img/flags/</code>), regionas (Skanlika – Extra Color 2, BCG – Accent), šalis ir aprašas. Užvedus kortelė pakyla, vėliava pasisuka ir padidėja, žiedas nusidažo įmonės spalva. Vėliavos – <a href="https://github.com/lipis/flag-icons">flag-icons</a> (MIT licencija) SVG, įkelti į Media biblioteką (SVG Support įskiepis) arba konvertuoti į PNG.</td></tr>
+      <tr><td>DUK</td><td>Toggles (Minimal).</td></tr>
+      <tr><td>#uzklausa</td><td>GS-Užklausa-klientams.</td></tr>
+    </table>
+
+    <h3 id="p-sritys">7.3 Veiklos sritys (veiklos-sritys.html)</h3>
+    <table>
+      <tr><th>Sekcija</th><th>Salient elementas</th></tr>
+      <tr><td>Page Header</td><td>Kaip 7.2, Video Background – naftos perdirbimo gamykla iš oro (Pexels 37151630).</td></tr>
+      <tr><td>#sritys: kortelės-skirtukai</td><td><strong>Tabbed Section</strong> (Style: „Material“ arba „Minimal Flexible“, 5 skirtukai su ikonomis). Makete skirtukai – 5 kortelės vienoje eilėje (planšetėje 3+2, telefone 2+2+1): numeris, ikona, srities pavadinimas ir rinkos; aktyvi kortelė – navy su srities nuotrauka fone ir gintaro linija apačioje, užvedus kortelė pakyla, ikona užsipildo. Skirtuko ID = srities ID, kad senos nuorodos <code>/veiklos-sritys/#naftos-ir-duju-pramone</code> (pradžios kortelės, meniu) atidarytų reikiamą skirtuką – 10 sk. JS (<code>data-tabs-hash</code>); rodyklių klavišai perjungia skirtukus.</td></tr>
+      <tr><td>Srities turinys (skirtuko vidus)</td><td>Viena balta kortelė, 2 kolonos. Kairė (Column Sticky): pagrindinis video 4:3 (Video Player autoplay be garso, groja tik kai matomas; laivų vidaus įrengime – nuotrauka) su išskleidimu į Video Lightbox + 2 nuotraukos 16:10 su užrašais. Dešinė: numeris ir rinkų žyma, h2, lead, Icon List „Ką atliekame“ 2 stulpeliais, žymos „Specialistai“, 4 faktų kortelės 2×2 (Rinkos, Modelis, Tipiniai užsakovai, Komandos dydis – Raw HTML <code>dl.sp-facts</code>), mygtukas „Užklausa dėl šios srities“ → /kontaktai/?sritis=…#uzklausa ir nuoroda „Kita sritis: …“. Makete video: 33585498, 29959405, 34771890, 12098511.</td></tr>
+      <tr><td>#bendra: kas bendra visoms sritims</td><td>Tamsi eilutė, 4 Icon With Text kortelės (6 % balta BG) + mygtukai.</td></tr>
+      <tr><td>CTA</td><td>GS-Kvietimas-užsakovams.</td></tr>
+    </table>
+
+    <h3 id="p-karjera">7.4 Karjera (karjera.html)</h3>
+    <table>
+      <tr><th>Sekcija</th><th>Salient elementas</th></tr>
+      <tr><td>Page Header</td><td>Kaip 7.2, Video Background – suvirintojas (Pexels 4941457); geriausia – filmuota medžiaga su tikru darbuotoju.</td></tr>
+      <tr><td>Kodėl dirbti su mumis</td><td>6 Icon With Text kortelės 3 kolonomis (ikona kairėje), Animate stagger; užvedus kortelė pakyla, ikona pasisuka.</td></tr>
+      <tr><td>Diena objekte (video kortelės)</td><td>Row (BG #E9EEF4), 3 kolonos <strong>Video Lightbox</strong> 16:10 – kaip pradžios „Darbas objektuose“ (groja užvedus, lightbox spustelėjus). Makete Pexels 30456100, 28886877, 11887091.</td></tr>
+      <tr><td>Kaip vyksta įdarbinimas</td><td>GS-Eiga variantas su kitais tekstais (4 žingsniai, Fancy Box su fono nuotrauka užvedus).</td></tr>
+      <tr><td>#pasiulymai: filtras ir pasiūlymai</td><td><strong>Variantas A (paprastas):</strong> Toggles (Minimal) Global Section'e su 60 px miniatiūra prie pavadinimo; filtro žymos – Raw HTML + 10 skyriaus JS pagal <code>data-salis</code>. <strong>Variantas B (ilgalaikis):</strong> CPT „Darbo pasiūlymas“ (CPT UI) su ACF laukais (šalis, įmonė, atlyginimas, pobūdis, reikalavimai, siūlome) + taksonomija „Šalis“; rodymas – Salient <strong>Post Grid</strong> su „Category filters“ ir custom šablonu; mygtukas „Kandidatuoti“ perduoda ?pozicija=… į formą (CF7 <code>default:get</code>). Žymos „Pavyzdys“ – tik makete.</td></tr>
+      <tr><td>Ko tikimės ir ką siūlome</td><td>Tamsi eilutė, 2 kolonos: Image With Animation (Mask Reveal, 4:5; kliento nuotrauka) + Icon List 2 kolonomis (8 punktai) + mygtukai.</td></tr>
+      <tr><td>Darbuotojai apie mus</td><td>Testimonial Slider (Minimal, Image: portretas) – pavyzdiniai tekstai ir Pexels portretai keistini tikrais.</td></tr>
+      <tr><td>DUK</td><td>Toggles (Minimal), 6 klausimai.</td></tr>
+      <tr><td>#cv</td><td>GS-CV: CF7 su failo priedu (8.2).</td></tr>
+    </table>
+
+    <h3 id="p-apie">7.5 Apie mus (apie-mus.html)</h3>
+    <table>
+      <tr><th>Sekcija</th><th>Salient elementas</th></tr>
+      <tr><td>Page Header</td><td>Kaip 7.2, Video Background – du inžinieriai objekte (Pexels 8964772).</td></tr>
+      <tr><td>Kas esame</td><td>2 kolonos: tekstas + <strong>Cascading Images</strong> arba 2 Image With Animation su skirtingu parallax (Column Parallax) ir Milestone žyma „2003“ (Raw HTML kortelė per vidurį).</td></tr>
+      <tr><td>#istorija</td><td>Kairėje prilipusi antraštė (Column Sticky), dešinėje vertikali laiko juosta: Raw HTML <code>.timeline</code> (CSS 10 sk.) arba Salient „Nectar Timeline“ (jei versijoje yra) – metai, pavadinimas, tekstas, spalvoti taškai (Skanlika teal, BCG mėlyna, sertifikatai gintaras). Prie 5 įvykių – 16:7 nuotrauka (Image, Image hover: Zoom; CSS <code>.tl__img</code>): prigesinta spalva, užvedus – spalvota ir pasirodo užrašas, laiko juostos taškas išsiplečia.</td></tr>
+      <tr><td>#imones</td><td>Dvi įmonės – ta pati struktūra kaip pradžioje (galima Global Section „GS-Dvi-įmonės“).</td></tr>
+      <tr><td>#vertybes</td><td>4 Icon With Text kortelės + citata „Kokybė, o ne kiekybė“ (Salient „Testimonial“ Style: Quote arba h3 centre).</td></tr>
+      <tr><td>#sertifikatai</td><td>3 Image With Animation (3:4, object-position top) su lightbox (Salient Image → „Link to full image“) + GS-Sertifikatai. Sertifikatų skenai – tikri (iš senos svetainės): atnaujinti, jei pasikeitė galiojimas.</td></tr>
+      <tr><td>Rinkos</td><td>8 kortelės kaip 7.2.</td></tr>
+      <tr><td>Kaip dirbame su darbuotojais</td><td>Tamsi eilutė, 6 Icon With Text kortelės + mygtukai į /karjera/.</td></tr>
+      <tr><td>CTA</td><td>GS-Kvietimas-užsakovams.</td></tr>
+    </table>
+
+    <h3 id="p-kontaktai">7.6 Kontaktai (kontaktai.html)</h3>
+    <table>
+      <tr><th>Sekcija</th><th>Salient elementas</th></tr>
+      <tr><td>Page Header</td><td>Kaip 7.2 (nuotrauka – Klaipėdos uostas; geriau – biuro ar komandos nuotrauka).</td></tr>
+      <tr><td>#imoniu-kontaktai</td><td>3 kolonos Fancy Box (Default): BCG, Skanlika, Biuras (tamsi). Kiekvienoje Icon List su tel:/mailto: nuorodomis ir rekvizitais.</td></tr>
+      <tr><td>#uzklausa</td><td>GS-Užklausa + kortelė „Kas vyksta po užklausos“.</td></tr>
+      <tr><td>#zemelapis</td><td>Leaflet Map Block (OpenStreetMap; marker Daukanto g. 34, 55.7155, 21.1288) arba Salient „Map“ (Google Maps API raktas, Snazzy stilius „Light grey“). Makete žemėlapis įkeliamas paspaudus – Complianz tai padaro automatiškai, jei žemėlapis priskiriamas „statistics/marketing“ kategorijai.</td></tr>
+      <tr><td>Kaip atvykti, #rekvizitai</td><td>3 Icon With Text + Raw HTML lentelė <code>.compare</code> (mobiliajame virsta kortelėmis per CSS).</td></tr>
+      <tr><td>#darbuotojams (CTA)</td><td>GS-Kvietimas-darbuotojams.</td></tr>
+    </table>
+
+    <h2 id="formos">8. Formos (Contact Form 7)</h2>
+    <p>Abi formos makete tik demonstruoja laukus ir patikrą. WordPress'e: CF7, stilius „Minimal“ per Theme Options + 10 skyriaus CSS (laukeliai 12 px, žymos-piliulės). Užklausos siunčiamos abiem adresams (info@baltcontract.eu, info@skanlika.com) – kol klientas nepasakys kitaip (13 sk.). Įjungti Flamingo (užklausų archyvas) ir Honeypot.</p>
+    <h3>8.1 Užsakovų forma</h3>
+<pre><code>&lt;div class="form__row"&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Įmonė *&lt;/label&gt;[text* imone autocomplete:organization]&lt;/div&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Vardas, pavardė *&lt;/label&gt;[text* vardas autocomplete:name]&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="form__row"&gt;
+  &lt;div class="field"&gt;&lt;label&gt;El. paštas *&lt;/label&gt;[email* el_pastas]&lt;/div&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Telefonas&lt;/label&gt;[tel telefonas]&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="form__row"&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Paslauga&lt;/label&gt;[select paslauga default:get "Dar nežinau, patarkite|" "Subranga|subranga" "Personalo nuoma|personalo-nuoma"]&lt;/div&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Veiklos sritis&lt;/label&gt;[select sritis default:get "Pasirinkite|" "Laivų statyba ir remontas|laivu-statyba-ir-remontas" "Naftos ir dujų pramonė|naftos-ir-duju-pramone" "Metalo konstrukcijos|metalo-konstrukcijos" "Laivų vidaus įrengimas|laivu-vidaus-irengimas" "Statybų pramonė|statybu-pramone"]&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field"&gt;&lt;label&gt;Reikalingi specialistai&lt;/label&gt;
+  [checkbox spec use_label_element "Suvirintojai" "Vamzdynų montuotojai" "Korpusų surinkėjai" "Elektrikai" "Dažytojai" "Apdailininkai" "Kita"]&lt;/div&gt;
+&lt;div class="form__row form__row--3"&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Žmonių skaičius&lt;/label&gt;[number kiekis min:1 placeholder "pvz. 12"]&lt;/div&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Šalis, objektas&lt;/label&gt;[text salis placeholder "pvz. Roterdamas"]&lt;/div&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Pradžia&lt;/label&gt;[date pradzia]&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field"&gt;&lt;label&gt;Apie projektą&lt;/label&gt;[textarea zinute]&lt;/div&gt;
+[acceptance sutikimas] Sutinku, kad mano duomenys būtų naudojami atsakyti į užklausą. &lt;a href="/privatumo-politika/"&gt;Privatumo politika&lt;/a&gt; [/acceptance]
+[submit class:btn class:btn--primary class:btn--lg "Gauti pasiūlymą"]</code></pre>
+    <p>Laiškas: tema „Užklausa iš svetainės: [imone] ([paslauga], [sritis])“, Reply-To [el_pastas]. Automatinis atsakymas klientui (Mail 2) trimis kalbomis per WPML CF7 Multilingual. Užklausos su <code>?tipas=subranga</code> ar <code>?sritis=…</code> adrese užpildo laukus per <code>default:get</code> (reikia <code>add_filter('wpcf7_form_tag_data_option', …)</code> arba CF7 „Contact Form 7 – Dynamic Text Extension“).</p>
+    <h3>8.2 Darbuotojų forma (CV)</h3>
+<pre><code>&lt;div class="form__row"&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Vardas, pavardė *&lt;/label&gt;[text* vardas]&lt;/div&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Telefonas *&lt;/label&gt;[tel* telefonas]&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="form__row"&gt;
+  &lt;div class="field"&gt;&lt;label&gt;El. paštas&lt;/label&gt;[email el_pastas]&lt;/div&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Profesija *&lt;/label&gt;[select* profesija default:get "Pasirinkite|" "Suvirintojas|suvirintojas" "Varinių vamzdžių suvirintojas|variniu-vamzdziu-suvirintojas" "Vamzdynų montuotojas|vamzdynu-montuotojas" "Laivų korpusų surinkėjas|korpusu-surinkejas" "Metalo konstrukcijų montuotojas|metalo-montuotojas" "Elektrikas|elektrikas" "Dažytojas, smėliuotojas|dazytojas" "Apdailininkas|apdailininkas" "Mechanikas, šaltkalvis|mechanikas" "Kita|kita"]&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field"&gt;&lt;label&gt;Sertifikatai&lt;/label&gt;[checkbox sert use_label_element "VCA" "135/136/138" "141/111" "Darbas aukštyje" "Vairuotojo paž." "Sofi nr."]&lt;/div&gt;
+&lt;div class="field"&gt;&lt;label&gt;Kalbos&lt;/label&gt;[checkbox kalba use_label_element "Anglų" "Vokiečių" "Olandų" "Švedų / norvegų" "Rusų"]&lt;/div&gt;
+&lt;div class="form__row form__row--3"&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Patirtis (metais)&lt;/label&gt;[number patirtis min:0 max:50]&lt;/div&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Dominančios šalys&lt;/label&gt;[select salys "Bet kuri" "Nyderlandai, Belgija" "Švedija, Norvegija, Danija" "Jungtinė Karalystė, Airija" "Vokietija"]&lt;/div&gt;
+  &lt;div class="field"&gt;&lt;label&gt;Galiu pradėti nuo&lt;/label&gt;[date nuo]&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="field"&gt;&lt;label&gt;CV failas&lt;/label&gt;[file cv limit:10mb filetypes:pdf|doc|docx]&lt;/div&gt;
+&lt;div class="field"&gt;&lt;label&gt;Žinutė&lt;/label&gt;[textarea zinute]&lt;/div&gt;
+[acceptance sutikimas] Sutinku, kad mano duomenys būtų saugomi kandidatų duomenų bazėje iki 2 metų. [/acceptance]
+[submit class:btn class:btn--primary class:btn--lg "Siųsti CV"]</code></pre>
+    <div class="note">CV priedas – asmens duomenys: laiške priedas siunčiamas tik įmonės pašto dėžutei, Flamingo archyve priedai saugomi serveryje – nustatyti automatinį trynimą po 2 metų (arba neįjungti priedų saugojimo). GDPR tekstą privatumo politikoje turi patvirtinti klientas.</div>
+
+    <h2 id="kalbos">9. Kalbos: LT, EN, DE</h2>
+    <ul>
+      <li><strong>WPML</strong> (rekomenduojama su Salient; oficialiai suderinta): LT – pagrindinė, EN ir DE – vertimai. URL formatas: katalogai <code>/en/</code>, <code>/de/</code>. Jungiklis antraštėje – „Menu language switcher“, stilius piliulė (10 sk.).</li>
+      <li>Versti: puslapiai (WPBakery turinys per „Translation Editor“ arba Advanced Translation Editor), meniu, Global Sections, CF7 formos (CF7 Multilingual), Theme Options tekstai (String Translation), Complianz tekstai, Rank Math meta.</li>
+      <li>Rinkos ir kalbos: EN versijai – JK/Airijos ir NL/Skandinavijos užsakovai (abi įmonės); DE versijai – Vokietija ir vokiškai kalbantys užsakovai Beniliukse. Kontaktų kortelėse galima pabrėžti atitinkamą įmonę pirmoje vietoje.</li>
+      <li>Vertimus geriausia daryti profesionaliai (pramonės terminai: suvirinimo procedūros, VCA/VCU pavadinimai). DeepL juodraštis + specialisto redagavimas.</li>
+      <li><code>hreflang</code> generuoja WPML + Rank Math; patikrinti po paleidimo.</li>
+    </ul>
+
+    <h2 id="css">10. Papildomas CSS ir JS (child tema)</h2>
+    <p>Dauguma maketo stiliaus – Theme Options. Toliau tai, ko Salient neturi natūraliai. Dėti į child temos <code>style.css</code> (ne į Theme Options Custom CSS, kad būtų versijuojama). Pilnas maketo CSS – <code>assets/css/style.css</code>; iš jo perkeliamos šios klasės (v2 blokas „daugiau medijos ir hover efektų“ failo gale – visas): <code>.btn*</code>, <code>.chip</code>, <code>.lang</code>, <code>.lockup</code>, <code>.paths/.path</code>, <code>.stats/.stat</code>, <code>.duo*</code>, <code>.model*</code>, <code>.sector*</code>, <code>.steps/.step</code>, <code>.compare</code>, <code>.specialists/.spec</code>, <code>.jobs/.job</code>, <code>.timeline/.tl</code>, <code>.markets/.market</code>, <code>.sector-tabs/.sector-tab</code>, <code>.sector-panel/.sp-*</code> (p-veiklos-sritys.css), <code>.svc-media</code> (p-klientams.css), <code>.media-expand</code>, <code>.mobile-bar</code>, <code>.demo-note</code> (ištrinti).</p>
+<pre><code>/* Piliulės mygtukai (Theme Options Button styling: Default) */
+body[data-button-style="default"] .nectar-button, .wpcf7 input[type="submit"] {
+  border-radius: 999px !important; font-family: "Schibsted Grotesk", sans-serif; font-weight: 600;
+  padding: 15px 28px !important; transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s;
+}
+.nectar-button:hover { transform: translateY(-2px); }
+.nectar-button.extra-color-1 { color: #0F1720 !important; box-shadow: 0 8px 22px rgba(242,169,59,.28); }
+
+/* Antraštė virš tamsaus hero ir slenkant */
+#header-outer[data-transparent-header="true"]:not(.scrolled-down) { background: transparent; }
+#header-outer.scrolled-down { background: rgba(255,255,255,.92); backdrop-filter: saturate(140%) blur(12px); box-shadow: 0 1px 0 #D9E0E8, 0 10px 30px rgba(12,30,51,.06); }
+#header-outer .sf-menu &gt; li &gt; a { border-radius: 999px; padding: 10px 12px; }
+#header-outer .sf-menu &gt; li.current-menu-item &gt; a::after { content:""; position:absolute; left:12px; right:12px; bottom:5px; height:2px; background:#F2A93B; border-radius:2px; }
+
+/* WPML kalbų jungiklis – piliulė */
+.wpml-ls-menu-item { display:inline-flex; gap:2px; padding:3px; border-radius:999px; background:#fff; border:1px solid #D9E0E8; }
+.wpml-ls-menu-item a { padding:5px 10px !important; border-radius:999px; font-size:.8rem; font-weight:600; letter-spacing:.04em; color:#5E6B7A; }
+.wpml-ls-current-language a { background:#0C1E33; color:#fff !important; }
+
+/* Kortelės su spalvota viršaus linija (dvi įmonės) */
+.duo__card { position:relative; border-radius:24px; overflow:clip; border:1px solid #D9E0E8; background:#fff; }
+.duo__card::before { content:""; position:absolute; inset:0 0 auto 0; height:5px; background:var(--accent,#1B4E9B); }
+.duo__card--skanlika { --accent:#0F7C7A; }
+
+/* Mobilus apatinis baras */
+.mobile-bar { display:none; position:fixed; left:0; right:0; bottom:0; z-index:90; background:rgba(12,30,51,.96); padding:8px 10px calc(8px + env(safe-area-inset-bottom)); gap:8px; }
+@media (max-width:900px){ .mobile-bar{ display:flex; } body{ padding-bottom:66px; } }
+
+/* Sticky kolona veikia tik jei body nėra slinkties konteineris (Salient nustato overflow) */
+body.page-template-default { overflow: visible; overflow-x: clip; }</code></pre>
+    <h4>JS (Theme Options → Custom JS (Head) arba child temos script)</h4>
+<pre><code>// Darbo pasiūlymų filtras pagal šalį (variantas A su Toggles)
+document.addEventListener('DOMContentLoaded', () =&gt; {
+  const f = document.querySelector('[data-job-filter]'), list = document.querySelector('[data-job-list]');
+  if (!f || !list) return;
+  f.addEventListener('change', () =&gt; {
+    const v = (f.querySelector('input:checked') || {}).value || 'visi';
+    list.querySelectorAll('[data-salis]').forEach(j =&gt; { j.hidden = !(v === 'visi' || j.dataset.salis === v); });
+  });
+});
+// Video kortelės (v2): groja be garso užvedus; lietimo įrenginiuose – kai kortelė matoma. Salient Video Lightbox poster'į keičia &lt;video poster&gt; su data-hover-video.
+document.querySelectorAll('video[data-hover-video]').forEach(v =&gt; {
+  const zone = v.closest('[data-hover-zone]') || v.parentElement; v.muted = true;
+  const play = () =&gt; { v.play().catch(() =&gt; {}); zone.classList.add('is-playing'); };
+  const stop = () =&gt; { v.pause(); v.currentTime = 0; zone.classList.remove('is-playing'); };
+  if (matchMedia('(hover: none)').matches) new IntersectionObserver(es =&gt; es.forEach(e =&gt; e.isIntersecting ? play() : stop()), { threshold: .6 }).observe(zone);
+  else { zone.addEventListener('mouseenter', play); zone.addEventListener('mouseleave', stop); }
+});
+// Lightbox (.vbox) – jei nenaudojamas Salient Video Lightbox: žr. assets/js/main.js skyrių „Video kortelės“ (openBox / closeBox, Escape, fokusas).
+// Veiklos sritys: skirtukas pagal adreso #id (Salient Tabbed Section skirtukų ID = srities ID)
+const openTabFromHash = () =&gt; { const id = location.hash.slice(1); const t = document.querySelector('.tabbed [data-tab-id="' + id + '"], [role="tab"][aria-controls="' + id + '"]'); if (t) { t.click(); document.getElementById('sritys').scrollIntoView({ behavior: 'smooth' }); } };
+addEventListener('DOMContentLoaded', openTabFromHash); addEventListener('hashchange', openTabFromHash);
+// Video, kuris groja tik kai matomas (Klientams, Veiklos sritys)
+const vio = new IntersectionObserver(es =&gt; es.forEach(e =&gt; e.isIntersecting ? e.target.play().catch(() =&gt; {}) : e.target.pause()), { threshold: .35 });
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.querySelectorAll('video[data-inview-video]').forEach(v =&gt; { v.muted = true; vio.observe(v); });
+// Mask Reveal (jei daromas savo CSS): stebėti tėvinį elementą – pilnai „uždengtas“ clip-path elementas naršyklei atrodo nematomas</code></pre>
+    <div class="note note--blue">Salient taisyklės, kurios tyliai perrašo komponentus: <code>button-styling</code> ne „default“ prideda <code>border-radius !important</code> visiems mygtukams; <code>.row .col img { height:auto }</code> nugali kortelių <code>img { height:100% }</code> – rašyti selektorius su konteinerio klase; pilno pločio eilutėms nekeisti <code>margin-left</code>; <code>form-fancy-select</code> išjungti; Salient neturi lietuviško vertimo (404, „Skip to content“) – versti per <code>gettext_salient</code> filtrą.</div>
+
+    <h2 id="media">11. Nuotraukos ir video</h2>
+    <ul>
+      <li>Visos nuotraukos ir video – <strong>Pexels</strong> (nemokama licencija, komerciniam naudojimui). Sąrašas su autoriais ir nuorodomis: <code>_brief/MEDIA.md</code>. Tai tik demo iliustracijos: <strong>prieš paleidimą rekomenduojama fotosesija objektuose</strong> (suvirintojai, komanda, biuras, laivų statykla) – ji labiausiai sustiprins pasitikėjimą.</li>
+      <li>Kliento medžiaga iš senos svetainės: logotipai (reikia vektorių), sertifikatų skenai (VCA, VCU, NEN 4400-1), „Stipriausi Lietuvoje“ ženklas, suvirintojo nuotrauka. Tikrinti sertifikatų galiojimą.</li>
+      <li>Hero video: 1280×720, iki 8 MB, mp4 (H.264) + poster JPG; talpinti savo serveryje arba Bunny Stream. Mobiliesiems Salient rodo tik poster (nustatymas „Disable video on mobile“) – maketas rodo video ir mobiliajame, tačiau su <code>prefers-reduced-motion</code> video nepaleidžiamas.</li>
+      <li>v2 video: hero video penkiuose puslapiuose (pradžia, klientams, veiklos sritys, karjera, apie mus – kontaktuose lieka Klaipėdos nuotrauka), 4 video kortelės pradžioje, 3 karjeroje, 1 veiklos srityse. Kortelių video kraunami tik užvedus (<code>preload="none"</code>), hero – <code>preload="metadata"</code>; lightbox'e – tas pats failas su garsu. Keičiant tikra medžiaga: 1280×720, 8–15 s, H.264, be garso; lightbox'ui galima ilgesnė versija.</li>
+      <li>v3: video prie subrangos ir personalo nuomos (Klientams) ir pagrindinis video keturiose veiklos srityse – groja be garso tik kai matomas, išskleidžiamas į lightbox; po jais po 2 nuotraukas. Kortelių ir skirtukų video <code>preload="none"</code>, paslėptame skirtuke video sustabdomas.</li>
+      <li>v2 nuotraukos: eigos kortelių fonai (4 pradžioje/klientams, 4 karjeroje), modelių juostos, užsakovų tipų kortelės, 12 specialybių miniatiūrų, darbo pasiūlymų miniatiūros, 6 atsiliepimų portretai, 5 laiko juostos nuotraukos, 10 sričių galerijos nuotraukų. Visos – Pexels, sąraše <code>_brief/MEDIA.md</code> skyrius „v2“. Portretai ir miniatiūros keistini tikrų darbuotojų nuotraukomis.</li>
+      <li>Dydžiai: hero 1800 px, sekcijų nuotraukos 1200 px, kortelės 900 px, miniatiūros 160 px; WebP per ShortPixel; <code>loading="lazy"</code> visoms ne pirmo ekrano nuotraukoms.</li>
+    </ul>
+
+    <h2 id="seo">12. SEO, 301 ir struktūriniai duomenys</h2>
+    <h3>Senų adresų nukreipimai (301)</h3>
+    <table>
+      <tr><th>Senas adresas (baltcontract.eu)</th><th>Naujas</th></tr>
+      <tr><td>/apie-mus/</td><td>/apie-mus/</td></tr>
+      <tr><td>/darbo-pasiulymai/</td><td>/karjera/</td></tr>
+      <tr><td>/kontaktai/</td><td>/kontaktai/</td></tr>
+      <tr><td>/metalo-konstrukcijos/</td><td>/veiklos-sritys/#metalo-konstrukcijos</td></tr>
+      <tr><td>/naftos-ir-duju-pramone/</td><td>/veiklos-sritys/#naftos-ir-duju-pramone</td></tr>
+      <tr><td>/laivu-statyba-ir-remontas/</td><td>/veiklos-sritys/#laivu-statyba-ir-remontas</td></tr>
+      <tr><td>/laivu-vidaus-irengimas/</td><td>/veiklos-sritys/#laivu-vidaus-irengimas</td></tr>
+      <tr><td>/statybu-pramone/</td><td>/veiklos-sritys/#statybu-pramone</td></tr>
+      <tr><td>/en/about-us/, /en/career/, /en/privacy-policy/</td><td>/en/about-us/, /en/career/, /en/privacy-policy/ (WPML EN versijos)</td></tr>
+      <tr><td>/privatumo-politika/</td><td>/privatumo-politika/</td></tr>
+    </table>
+    <div class="note">Jei SEO tikslais norima atskirų sričių puslapių (pvz., „laivų statyba ir remontas personalo nuoma“), kiekvieną sritį galima padaryti atskiru puslapiu su ta pačia struktūra kaip blokas /veiklos-sritys/ – tada 301 veda į juos, o ne į inkarus.</div>
+    <h3>Meta tekstai (LT)</h3>
+    <table>
+      <tr><th>Puslapis</th><th>Title · Description</th></tr>
+      <tr><td>Pradžia</td><td>Subranga ir personalo nuoma pramonei | Baltic Contracting Group · Skanlika · Kvalifikuoti suvirintojai, vamzdynų montuotojai, laivų korpusų surinkėjai, elektrikai ir apdailininkai jūsų projektams Skandinavijoje, Beniliukse, JK ir Airijoje. Dvi įmonės, viena komanda Klaipėdoje.</td></tr>
+      <tr><td>Klientams</td><td>Subranga ir personalo nuoma: kaip dirbame su užsakovais · Du modeliai, 12 specialybių, VCA/VCU/NEN 4400-1, komanda objekte per 2–4 savaites.</td></tr>
+      <tr><td>Veiklos sritys</td><td>Laivų statyba, nafta ir dujos, metalo konstrukcijos, statyba · Penkios pramonės sritys, kuriose teikiame subrangos ir personalo nuomos paslaugas.</td></tr>
+      <tr><td>Karjera</td><td>Darbas užsienyje suvirintojams, montuotojams, elektrikams · Darbo pasiūlymai Nyderlanduose, Švedijoje, JK. Apgyvendinimas, draudimas, kelionės. Siųskite CV.</td></tr>
+      <tr><td>Apie mus</td><td>Dvi įmonės, viena komanda nuo 2003 m. · Skanlika (JK ir Airija) ir Baltic Contracting Group (Skandinavija, Vakarų Europa): istorija, vertybės, sertifikatai.</td></tr>
+      <tr><td>Kontaktai</td><td>Kontaktai: Baltic Contracting Group ir Skanlika, Klaipėda · Užklausos forma užsakovams ir darbuotojams, rekvizitai, žemėlapis.</td></tr>
+    </table>
+    <h3>Struktūriniai duomenys</h3>
+    <p>Rank Math: Organization „Baltic Contracting Group“ (logo, telefonas, adresas, sameAs) + antra Organization „Skanlika“ per Custom Schema (arba viena <code>Organization</code> su <code>subOrganization</code>). Darbo pasiūlymams (variantas B) – <code>JobPosting</code> schema su <code>baseSalary</code>, <code>jobLocation</code>, <code>employmentType</code>; tai leidžia patekti į Google Jobs. Pašalinti <code>noindex</code> (maketo meta) ir patikrinti <code>robots.txt</code>, sitemap, hreflang.</p>
+
+    <h2 id="klientui">13. Patikslinti su klientu</h2>
+    <table>
+      <tr><th>Tema</th><th>Kas neaišku / ko reikia</th></tr>
+      <tr><td>Adresas</td><td>Kontaktų puslapyje – Daukanto g. 34, Klaipėda 92143; senos svetainės poraštėje – Malūnininkų g. 3, 92264; KvK išraše – H. Manto 52-1. Kuris aktualus? Darbo laikas (makete I–V 8:00–17:00).</td></tr>
+      <tr><td>Įmonių pozicionavimas</td><td>Ar tikslu: Skanlika = JK ir Airija, BCG = Skandinavija ir Vakarų Europa (NL, SE, NO, DK, DE, BE)? Kurios šalys tikrai (makete Norvegija, Danija, Vokietija, Belgija pažymėtos „tikslinama“). Ar BCG veikla pradėta 2013 m. (svetainė) ar 2011 m. (KvK)?</td></tr>
+      <tr><td>Skaičiai</td><td>Darbuotojų skaičius, projektų skaičius per metus, komandų dydžiai (veiklos sričių puslapyje: 5–30, 10–40, 2–20, 4–15, 5–25 specialistų), laikas iki mobilizacijos (makete 2–4 sav.), atsakymo laikas (1 d. d.). Hero skaitikliai: 20+ metų, 5 sritys, 2 įmonės, 100 % ES piliečiai – patvirtinti.</td></tr>
+      <tr><td>Veiklos sričių faktai</td><td>Kiekvienos srities „Tipiniai užsakovai“, „Rinkos“ ir „Bendradarbiavimo modelis“ (pvz., nafta ir dujos – personalo nuoma remonto stabdymams, subranga darbų paketams; statyba – JK ir Airija) – apibendrinti iš senos svetainės, patvirtinti. Ką konkrečiai įmonės veikia kiekvienoje iš 8 šalių (rinkų kortelės).</td></tr>
+      <tr><td>Istorija</td><td>Laiko juosta „Apie mus“: 2003–2012 intervalas sąlyginis; „Stipriausi Lietuvoje“ – ar tikrai penkerius metus iš eilės; 2026 m. įrašas apie naują svetainę – pašalinti arba perrašyti. Ar VCA/VCU/NEN 4400-1 priklauso tik BCG (skenuose – BCG), o Skanlika tvarko JK dokumentus?</td></tr>
+      <tr><td>Paslaugų aprašai</td><td>Subrangos ir personalo nuomos skirtumai, kas įeina į kainą, kaip atsiskaitoma (valandos / apimtis; makete – sąskaita po kiekvieno etapo, kas 2 sav. arba kas mėnesį), ar teikiate įrankius ir AAP, darbuotojo pakeitimo sąlygos (makete – per 5 d. d.), subrangos etapo trukmė (1–6 mėn.), komandos didinimas / mažinimas (1–2 sav.), tipinis komandos dydis (3–20 žmonių), darbas pamainomis ir savaitgaliais.</td></tr>
+      <tr><td>Kontaktų puslapis</td><td>„Kaip atvykti“ kortelės (stovėjimas, 15 min. nuo stoties, 10 min. nuo uosto), „Kas vyksta po užklausos“ terminai, „Skubiems atvejams“ pažadai, žemėlapio koordinatės (55.7155, 21.1288 – S. Daukanto g.; patikrinti pagal tikrą adresą).</td></tr>
+      <tr><td>Atsiliepimai</td><td>Visi atsiliepimai (3 užsakovų, 3 darbuotojų) – pavyzdiniai. Reikia tikrų arba šalinti. Ar galima minėti klientų pavadinimus / logotipus?</td></tr>
+      <tr><td>Darbo pasiūlymai</td><td>3 skelbimai iš senos svetainės (galioja?), 2 pažymėti „pavyzdys“. Kas pildys skelbimus: paprasti Toggles ar įrašų tipas su filtru?</td></tr>
+      <tr><td>Sertifikatai</td><td>VCA/VCU (2022), NEN 4400-1 (2022) galiojimas; ar yra ISO 9001 / 3834? „Stipriausi Lietuvoje“ naujesni metai?</td></tr>
+      <tr><td>Logotipai</td><td>Vektoriniai BCG ir Skanlika failai (AI/SVG/PDF). Skanlika spalva (makete – teal pasiūlymas).</td></tr>
+      <tr><td>Kalbos</td><td>Ar EN ir DE pilnai, ar tik pagrindiniai puslapiai? Kas verčia? Ar reikia NL / SV?</td></tr>
+      <tr><td>Formos</td><td>Kam ateina užklausos (vienas ar skirtingi adresai pagal įmonę / kalbą)? Ar reikia CRM integracijos (Pipedrive, HubSpot)? Ar CV kaupiami duomenų bazėje (GDPR terminas 2 m.)?</td></tr>
+      <tr><td>Nuotraukos ir video</td><td>Ar yra savų objektų nuotraukų / video? Fotosesija? Video kortelėms reikia 8 trumpų (8–15 s) kadrų iš objektų: laivų statykla, suvirinimas, gamykla, statyba, cechas, elektros skydai, dažymas; hero video – 5 puslapiams. Portretai atsiliepimams (6) ir specialybių miniatiūroms (12) – iš fotosesijos.</td></tr>
+      <tr><td>Privatumo politika</td><td>Tekstas trimis kalbomis, slapukų politika.</td></tr>
+    </table>
+
+    <h2 id="paleidimas">14. Paleidimo kontrolinis sąrašas</h2>
+    <ul class="chk">
+      <li>Pašalinta maketo juosta, žymos „tikslinama“ ir „Pavyzdys“, <code>noindex</code>.</li>
+      <li>Theme Options pagal 4 skyrių; child tema su 10 skyriaus CSS/JS; šriftų LT rašmenų patikra.</li>
+      <li>Logotipai SVG (tamsus, šviesus, mobilus); favicon.</li>
+      <li>Visos 6 puslapių versijos LT; EN ir DE vertimai; meniu ir Global Sections trimis kalbomis; hreflang.</li>
+      <li>CF7 formos: siuntimas, SPF/DKIM, Flamingo, Honeypot, auto atsakymai, CV priedo limitas 10 MB, GDPR tekstai.</li>
+      <li>Nukreipimai 301 iš senų adresų; sitemap; Search Console ir Analytics (per Complianz sutikimą).</li>
+      <li>Nuotraukos WebP, lazy load, hero video ≤ 8 MB, poster; Lighthouse mobiliesiems ≥ 85.</li>
+      <li>Patikra mobiliajame: antraštė, off-canvas meniu, apatinis baras, formos, Toggles, žemėlapis po sutikimo.</li>
+      <li>Prieinamumas: kontrastas, fokusas, <code>prefers-reduced-motion</code>, alt tekstai, formų klaidų pranešimai.</li>
+      <li>Atsarginės kopijos, atnaujinimų politika, Simplex.lt pagalbos kontaktai administravimo skydelyje.</li>
+    </ul>
+    <p style="margin-top:40px;color:var(--muted);font-size:.9rem">Parengė Simplex.lt, 2026-10-29. Maketas: <a href="index.html">index.html</a>. Faktų šaltinis: <code>_brief/BRIEF.md</code>, medija: <code>_brief/MEDIA.md</code>.</p>
+  </main>
+</div>
+</body>
+</html>

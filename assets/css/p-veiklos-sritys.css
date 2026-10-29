@@ -1,0 +1,91 @@
+/* Veiklos sritys: papildomi stiliai tik šiam puslapiui.
+   Salient: Tabbed Section (kortelės-skirtukai), Image With Animation / Video, Icon List, Fancy Box. */
+
+/* Kortelės-skirtukai */
+.sector-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 18px; }
+.sector-tab { position: relative; display: grid; align-content: space-between; gap: 18px; min-height: 172px; padding: 18px 18px 20px; border-radius: var(--r); background: var(--white); border: 1px solid var(--line); color: var(--ink); text-align: left; overflow: clip; isolation: isolate; cursor: pointer; transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .3s, background-color .3s, color .3s; }
+.sector-tab::after { content: ""; position: absolute; left: 18px; right: 18px; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--amber); transform: scaleX(0); transition: transform .45s var(--ease); }
+.sector-tab__img { position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .5s var(--ease); }
+.sector-tab__img img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); transition: transform 1.2s var(--ease); }
+.sector-tab__img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12, 30, 51, .55), rgba(12, 30, 51, .92)); }
+.sector-tab__top { display: flex; justify-content: space-between; align-items: center; }
+.sector-tab__num { font-family: var(--f-head); font-weight: 800; font-size: .95rem; letter-spacing: .02em; color: var(--muted); transition: color .3s; }
+.sector-tab__icon { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-size: 1.4rem; background: var(--blue-soft); color: var(--blue); transition: background-color .35s, color .35s, transform .5s var(--ease); }
+.sector-tab__text strong { display: block; font-family: var(--f-head); font-size: 1.06rem; line-height: 1.22; letter-spacing: -.01em; }
+.sector-tab__text small { display: block; margin-top: 6px; font-size: .8rem; color: var(--muted); transition: color .3s; }
+.sector-tab:hover { transform: translateY(-4px); box-shadow: var(--sh-2); border-color: var(--line-2); }
+.sector-tab:hover .sector-tab__icon { background: var(--blue); color: #fff; transform: rotate(-8deg) scale(1.06); }
+.sector-tab:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+.sector-tab[aria-selected="true"] { background: var(--navy); border-color: var(--navy); color: #fff; box-shadow: var(--sh-3); transform: translateY(-4px); }
+.sector-tab[aria-selected="true"]::after { transform: scaleX(1); }
+.sector-tab[aria-selected="true"] .sector-tab__img { opacity: 1; }
+.sector-tab[aria-selected="true"] .sector-tab__img img { transform: scale(1); }
+.sector-tab[aria-selected="true"] .sector-tab__num { color: var(--amber); }
+.sector-tab[aria-selected="true"] .sector-tab__icon { background: rgba(255, 255, 255, .14); color: var(--amber); }
+.sector-tab[aria-selected="true"] .sector-tab__text small { color: #c4d0dd; }
+
+/* Srities turinys */
+.sector-panel { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: clamp(28px, 4vw, 56px); padding: clamp(18px, 2.6vw, 32px); border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--sh-1); scroll-margin-top: 96px; }
+.sector-panel:focus-visible { outline: 3px solid var(--amber); outline-offset: 4px; }
+.js .sector-panel:not([hidden]) { animation: panelIn .6s var(--ease) both; }
+@keyframes panelIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.sector-panel__media { position: sticky; top: 100px; align-self: start; display: grid; gap: 12px; }
+.sp-main { aspect-ratio: 4 / 3; background: var(--navy); }
+.sp-main video, .sp-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sp-main .reel__live { left: 18px; top: 26px; }
+.sp-thumbs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sp-thumbs .figure { aspect-ratio: 16 / 10; border-radius: var(--r); }
+.sp-thumbs .figure__caption { left: 10px; bottom: 10px; font-size: .74rem; padding: 4px 10px; }
+.sector-panel__body { padding-block: 4px; }
+.sector-panel__top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.sector-panel__num { font-family: var(--f-head); font-weight: 800; font-size: 2.4rem; line-height: 1; letter-spacing: -.04em; color: var(--line-2); }
+.sector-panel h2 { font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.5rem); margin-bottom: 12px; }
+.sector-panel .lead { font-size: 1.06rem; margin-bottom: 4px; }
+.sp-h { margin: 22px 0 10px; font-family: var(--f-body); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.sector-panel .check-list { gap: 8px 22px; }
+.sector-panel .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.sp-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 24px 0 0; }
+.sp-facts div { padding: 14px 16px; border-radius: var(--r-sm); background: var(--paper); border: 1px solid var(--line); transition: border-color .3s, transform .4s var(--ease); }
+.sp-facts div:hover { border-color: var(--blue-soft); transform: translateY(-2px); }
+.sp-facts dt { display: flex; align-items: center; gap: 6px; font-size: .78rem; color: var(--muted); margin-bottom: 4px; }
+.sp-facts dt i { color: var(--blue); font-size: 1rem; }
+.sp-facts dd { margin: 0; font-weight: 600; font-size: .95rem; line-height: 1.4; }
+.sp-actions { margin-top: 26px; gap: 14px 24px; }
+
+/* „Kas bendra“: 4 kortelės vienoje eilėje */
+.benefits--4 { grid-template-columns: repeat(4, 1fr); }
+.btn-row--center { justify-content: center; margin-top: 34px; }
+
+/* CTA juosta tamsiame fone */
+.cta-band .eyebrow { color: var(--amber); }
+
+@media (max-width: 1100px) {
+  .benefits--4 { grid-template-columns: repeat(2, 1fr); }
+  .sector-tab { min-height: 150px; padding: 16px 14px 18px; }
+  .sector-tab__text strong { font-size: .98rem; }
+  .sector-tab__text small { display: none; }
+}
+@media (max-width: 900px) {
+  .sector-tabs { grid-template-columns: repeat(6, 1fr); }
+  .sector-tab { grid-column: span 2; min-height: 128px; }
+  .sector-tab:nth-child(n+4) { grid-column: span 3; }
+  .sp-main { aspect-ratio: 16 / 9; }
+  .sector-panel { grid-template-columns: 1fr; }
+  .sector-panel__media { position: static; }
+}
+@media (max-width: 640px) {
+  .benefits--4 { grid-template-columns: 1fr; }
+  .sector-tabs { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sector-tab, .sector-tab:nth-child(n+4) { grid-column: auto; }
+  .sector-tab:last-child { grid-column: span 2; }
+  .sector-tab { min-height: 0; grid-template-columns: auto 1fr; align-items: center; gap: 12px; padding: 12px 14px; }
+  .sector-tab__top { gap: 0; }
+  .sector-tab__num { display: none; }
+  .sector-tab__icon { width: 38px; height: 38px; font-size: 1.15rem; border-radius: 12px; }
+  .sector-tab__text strong { font-size: .9rem; }
+  .sector-tab[aria-selected="true"], .sector-tab:hover { transform: none; }
+  .sector-panel { padding: 14px; border-radius: var(--r); }
+  .sector-panel__body { padding: 4px 4px 8px; }
+  .sp-facts { grid-template-columns: 1fr; }
+  .sp-actions .btn { width: 100%; white-space: normal; text-align: center; }
+}

@@ -1,0 +1,102 @@
+  <a class="skip" href="#turinys">Pereiti į turinį</a>
+
+  <!-- Salient: Header Layout „Centered Logo Between Menu“ nenaudojamas; čia standartinis header su Transparent + Sticky (shrink) -->
+  <header class="site-header" id="site-header">
+    <div class="container site-header__inner">
+      <a class="lockup" href="index.html" aria-label="Baltic Contracting Group ir Skanlika, pradžia">
+        <img class="lockup__bcg lockup__img--dark" src="assets/img/logo/bcg-ink.png" alt="Baltic Contracting Group" width="213" height="30">
+        <img class="lockup__bcg lockup__img--light" src="assets/img/logo/bcg-white.png" alt="" width="213" height="30" aria-hidden="true">
+        <span class="lockup__divider" aria-hidden="true"></span>
+        <img class="lockup__skanlika lockup__img--dark" src="assets/img/logo/skanlika-ink.png" alt="Skanlika" width="125" height="30">
+        <img class="lockup__skanlika lockup__img--light" src="assets/img/logo/skanlika-white.png" alt="" width="125" height="30" aria-hidden="true">
+      </a>
+
+      <nav class="nav" aria-label="Pagrindinis meniu">
+        <div class="nav__item" data-drop>
+          <a class="nav__link" href="klientams.html" data-nav="klientams">Klientams <i class="ph ph-caret-down" aria-hidden="true"></i></a>
+          <div class="nav__drop nav__drop--wide">
+            <div class="nav__drop-grid">
+              <a class="drop-card" href="klientams.html#subranga">
+                <span class="drop-card__icon"><i class="ph ph-stack"></i></span>
+                <span class="drop-card__text"><strong>Subranga</strong><span>Perimame darbų paketą su savo komanda ir vadovu</span></span>
+              </a>
+              <a class="drop-card" href="klientams.html#personalo-nuoma">
+                <span class="drop-card__icon"><i class="ph ph-users-three"></i></span>
+                <span class="drop-card__text"><strong>Personalo nuoma</strong><span>Mūsų specialistai prisijungia prie jūsų komandos</span></span>
+              </a>
+              <a class="drop-card" href="klientams.html#specialistai">
+                <span class="drop-card__icon"><i class="ph ph-certificate"></i></span>
+                <span class="drop-card__text"><strong>Specialistai</strong><span>Suvirintojai, montuotojai, elektrikai, apdailininkai</span></span>
+              </a>
+              <a class="drop-card" href="klientams.html#eiga">
+                <span class="drop-card__icon"><i class="ph ph-flow-arrow"></i></span>
+                <span class="drop-card__text"><strong>Kaip dirbame</strong><span>Nuo užklausos iki komandos objekte per 2–4 savaites</span></span>
+              </a>
+            </div>
+            <div class="nav__drop-foot"><span class="muted">Dvi įmonės, viena komanda: Skandinavija, Beniliuksas, Jungtinė Karalystė ir Airija</span><a class="link-u" href="klientams.html#uzklausa">Gauti pasiūlymą <i class="ph ph-arrow-right"></i></a></div>
+          </div>
+        </div>
+
+        <div class="nav__item" data-drop>
+          <a class="nav__link" href="veiklos-sritys.html" data-nav="veiklos-sritys">Veiklos sritys <i class="ph ph-caret-down" aria-hidden="true"></i></a>
+          <div class="nav__drop">
+            <a class="drop-link" href="veiklos-sritys.html#metalo-konstrukcijos"><i class="ph ph-cube"></i> Metalo konstrukcijos</a>
+            <a class="drop-link" href="veiklos-sritys.html#naftos-ir-duju-pramone"><i class="ph ph-factory"></i> Naftos ir dujų pramonė</a>
+            <a class="drop-link" href="veiklos-sritys.html#laivu-statyba-ir-remontas"><i class="ph ph-anchor"></i> Laivų statyba ir remontas</a>
+            <a class="drop-link" href="veiklos-sritys.html#laivu-vidaus-irengimas"><i class="ph ph-armchair"></i> Laivų vidaus įrengimas</a>
+            <a class="drop-link" href="veiklos-sritys.html#statybu-pramone"><i class="ph ph-buildings"></i> Statybų pramonė</a>
+          </div>
+        </div>
+
+        <a class="nav__link" href="karjera.html" data-nav="karjera">Karjera</a>
+        <a class="nav__link" href="apie-mus.html" data-nav="apie-mus">Apie mus</a>
+        <a class="nav__link" href="kontaktai.html" data-nav="kontaktai">Kontaktai</a>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Kalbos: demo rodo tik LT; EN ir DE – WPML / Polylang pilname projekte -->
+        <div class="lang" role="group" aria-label="Kalba">
+          <button class="lang__btn is-active" type="button" lang="lt" aria-pressed="true">LT</button>
+          <button class="lang__btn" type="button" lang="en" data-lang-demo="EN">EN</button>
+          <button class="lang__btn" type="button" lang="de" data-lang-demo="DE">DE</button>
+        </div>
+        <a class="header-phone" href="tel:+37046310637" aria-label="Skambinti +370 46 310637"><i class="ph ph-phone" aria-hidden="true"></i><span>+370 46 310637</span></a>
+        <a class="btn btn--primary btn--sm header-cta" href="kontaktai.html#uzklausa">Gauti pasiūlymą</a>
+        <button class="burger" type="button" aria-label="Atidaryti meniu" aria-expanded="false" aria-controls="mobile-menu"><i class="ph ph-list" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Meniu" hidden>
+    <div class="container">
+      <div class="mobile-menu__top">
+        <a class="lockup lockup--light" href="index.html" aria-label="Pradžia">
+          <img src="assets/img/logo/bcg-white.png" alt="Baltic Contracting Group" width="170" height="24">
+          <span class="lockup__divider" aria-hidden="true"></span>
+          <img src="assets/img/logo/skanlika-white.png" alt="Skanlika" width="100" height="24">
+        </a>
+        <button class="mobile-menu__close" type="button" aria-label="Uždaryti meniu"><i class="ph ph-x" aria-hidden="true"></i></button>
+      </div>
+      <nav class="mobile-menu__links" aria-label="Meniu mobiliesiems">
+        <a href="klientams.html">Klientams <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+        <a class="mobile-menu__sub" href="klientams.html#subranga">Subranga</a>
+        <a class="mobile-menu__sub" href="klientams.html#personalo-nuoma">Personalo nuoma</a>
+        <a href="veiklos-sritys.html">Veiklos sritys <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+        <a href="karjera.html">Karjera <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+        <a href="apie-mus.html">Apie mus <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+        <a href="kontaktai.html">Kontaktai <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+      </nav>
+      <div class="mobile-menu__foot">
+        <div class="lang lang--dark" role="group" aria-label="Kalba">
+          <button class="lang__btn is-active" type="button" aria-pressed="true">LT</button>
+          <button class="lang__btn" type="button" data-lang-demo="EN">EN</button>
+          <button class="lang__btn" type="button" data-lang-demo="DE">DE</button>
+        </div>
+        <a class="btn btn--amber" href="kontaktai.html#uzklausa">Gauti pasiūlymą</a>
+        <a class="btn btn--ghost-light" href="karjera.html#cv">Siųsti CV</a>
+        <a class="mobile-menu__phone" href="tel:+37046310637"><i class="ph ph-phone" aria-hidden="true"></i> +370 46 310637</a>
+      </div>
+    </div>
+  </div>
+
+  <main id="turinys">

@@ -1,0 +1,61 @@
+/* Apie mus: papildomi stiliai tik šiam puslapiui (style.css neliečiamas).
+   Salient: Image With Animation (mask + parallax), Column Sticky, Nectar Timeline, Testimonial „Quote“, Image Grid. */
+
+/* Nuotraukų kompozicija su paralaksu */
+.media-grid__item { position: relative; }
+.media-grid__item .px { position: absolute; inset: -8% 0; }
+.media-grid__item .px img { height: 100%; }
+
+/* Istorija: prilipusi antraštė kairėje, laiko juosta dešinėje */
+.history { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+.history .section-head { position: sticky; top: 100px; margin-bottom: 0; }
+.section--mist .tl::before { box-shadow: 0 0 0 5px var(--mist); }
+.tl { grid-template-columns: 150px 1fr; }
+.tl:last-child { padding-bottom: 0; }
+.tl h3 .demo-note { font-family: var(--f-body); font-weight: 500; letter-spacing: .06em; }
+
+/* Dvi įmonės: ką atsako užsakovui */
+.duo__note { margin: 0; padding: 12px 14px; border-radius: var(--r-sm); background: var(--blue-soft-2); border: 1px solid var(--blue-soft); font-size: .92rem; color: var(--ink-2); }
+.duo__card--skanlika .duo__note { background: var(--teal-soft); border-color: #BFE2DF; }
+
+/* Principas po vertybėmis */
+.principle { margin-top: clamp(36px, 5vw, 64px); margin-bottom: 0; }
+.principle blockquote { margin: 0; font-family: var(--f-head); font-weight: 700; font-size: clamp(1.7rem, 1.2rem + 1.8vw, 2.6rem); letter-spacing: -.02em; line-height: 1.15; color: var(--ink); }
+.principle blockquote::before { content: ""; display: block; width: 44px; height: 4px; border-radius: 4px; background: var(--amber); margin: 0 auto 18px; }
+.principle p { color: var(--muted); margin: 14px auto 0; max-width: 560px; }
+
+/* Sertifikatų skenai: portretinis formatas, matomas viršus */
+.cert-scans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 20px; }
+.cert-scan { display: grid; gap: 14px; align-content: start; }
+.cert-scan h3 { margin: 0; font-size: 1.15rem; }
+.cert-scan p { margin: 0; color: var(--muted); font-size: .93rem; }
+.cert-scan p strong { color: var(--ink-2); }
+.figure--doc { display: block; aspect-ratio: 3 / 4; background: var(--white); border: 1px solid var(--line); box-shadow: var(--sh-1); transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+.figure--doc img { object-position: top; transition: transform 1.2s var(--ease); }
+.figure--doc:hover { transform: translateY(-4px); box-shadow: var(--sh-3); }
+.figure--doc:hover img { transform: scale(1.03); }
+.figure--doc .figure__caption { left: auto; right: 14px; bottom: 14px; }
+
+/* Rinkos: žymėjimas */
+.markets__legend { display: flex; flex-wrap: wrap; gap: 8px; }
+.markets__legend .chip i { font-size: .55rem; }
+.market strong .demo-note { font-size: .62rem; }
+
+/* Mygtukai centre tamsioje sekcijoje; CTA juostos antraštėlė */
+.btn-row--center { justify-content: center; margin-top: 34px; }
+.cta-band .eyebrow { color: var(--amber); }
+
+@media (max-width: 1100px) {
+  .cert-scans { gap: 14px; }
+}
+@media (max-width: 900px) {
+  .history { grid-template-columns: 1fr; }
+  .history .section-head { position: static; }
+  .tl { grid-template-columns: 120px 1fr; }
+}
+@media (max-width: 640px) {
+  .tl { grid-template-columns: 1fr; }
+  .cert-scans { grid-template-columns: 1fr; }
+  .figure--doc { max-width: 320px; }
+  .media-grid__badge { left: auto; right: 14px; top: auto; bottom: 14px; transform: none; min-width: 0; }
+}

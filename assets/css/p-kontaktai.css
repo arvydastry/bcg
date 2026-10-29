@@ -1,0 +1,54 @@
+/* Kontaktų puslapio papildomi stiliai (tik kontaktai.html). Salient: Fancy Box, Icon List, WPBakery Table. */
+
+/* Kontaktų kortelės trijose kolonose */
+.cards-3 .contact-card { align-content: start; }
+.contact-card__sub { margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.5; }
+.contact-card--navy .contact-card__sub { color: #9fb0c3; }
+.contact-card__facts { display: grid; gap: 3px; padding-top: 12px; margin-top: 4px; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
+.contact-card--navy .contact-card__facts { border-color: rgba(255, 255, 255, .14); color: #9fb0c3; }
+.contact-card .demo-note { margin-left: 2px; }
+
+/* Plati atsakymo kortelė po kontaktais */
+.reply-card--wide { margin-top: 20px; }
+
+/* Numeruoti žingsniai šoninėje kortelėje */
+.mini-steps { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 14px; }
+.mini-steps li { display: flex; gap: 12px; align-items: flex-start; }
+.mini-steps__num { width: 30px; height: 30px; border-radius: 50%; background: var(--blue-soft); color: var(--blue); font-family: var(--f-head); font-weight: 700; font-size: .88rem; display: grid; place-items: center; flex-shrink: 0; margin-top: 1px; }
+.mini-steps strong { display: block; font-family: var(--f-head); font-weight: 600; line-height: 1.3; margin-bottom: 2px; }
+.mini-steps span:not(.mini-steps__num) { color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+/* Žemėlapis ir „Kaip atvykti“ */
+.map-cards { margin-top: 20px; }
+.map-cards .card p { font-size: .92rem; }
+
+/* Rekvizitų lentelė: penki stulpeliai, mobiliajame slenkama tik lentelė */
+.compare--req { min-width: 820px; }
+.compare--req th:first-child { width: 24%; }
+.compare--req td { white-space: nowrap; }
+.compare--req td:last-child { white-space: normal; }
+
+/* CTA juostos antraštė tamsiame fone; nuotrauka pozicionuojama aukščiau, kad matytųsi veidas */
+.cta-band .eyebrow { color: var(--amber); }
+.cta-band .eyebrow::before { background: #fff; }
+.cta-band__bg img { object-position: 50% 22%; }
+
+@media (max-width: 900px) {
+  .cards-3 .contact-card--navy { order: 3; }
+}
+@media (max-width: 640px) {
+  /* Rekvizitų lentelė telefone: kiekviena įmonė tampa kortele (be horizontalaus slinkimo) */
+  .compare--req { min-width: 0; }
+  .compare--req thead { display: none; }
+  .compare--req tr { display: grid; }
+  .compare--req td { display: block; border-bottom: 0; padding: 6px 16px; background: var(--white); white-space: normal; }
+  .compare--req td:first-child { padding: 12px 16px 10px; background: var(--mist); font-family: var(--f-head); font-weight: 600; }
+  .compare--req td:nth-child(n+2)::before { display: block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); font-weight: 600; margin-bottom: 1px; }
+  .compare--req td:nth-child(2) { padding-top: 12px; }
+  .compare--req td:nth-child(2)::before { content: "Įmonės kodas"; }
+  .compare--req td:nth-child(3)::before { content: "PVM kodas"; }
+  .compare--req td:nth-child(4)::before { content: "El. paštas"; }
+  .compare--req td:nth-child(5)::before { content: "Registracija"; }
+  .compare--req td:last-child { padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+  .compare--req tr:last-child td:last-child { border-bottom: 0; }
+}
