@@ -489,6 +489,11 @@ body.menu-open { overflow: hidden; }
 .job__meta { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: .9rem; color: var(--muted); }
 .job__meta span { display: inline-flex; align-items: center; gap: 6px; }
 .job__meta i { color: var(--blue); }
+.job__flag { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; box-shadow: 0 0 0 1px var(--line); transition: transform .4s var(--ease); }
+.job__country { color: var(--ink-2); font-weight: 500; }
+.job--dark .job__country { color: #d7e0ea; }
+.job--dark .job__flag { box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .3); }
+.job:hover .job__flag, .job[open] .job__flag { transform: scale(1.15) rotate(-8deg); }
 .job__pay { font-family: var(--f-head); font-weight: 700; font-size: 1.15rem; color: var(--ink); white-space: nowrap; text-align: right; }
 .job__pay small { display: block; font-size: .78rem; color: var(--muted); font-weight: 500; }
 .job__toggle { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; transition: transform .4s var(--ease), background-color .3s, color .3s; }
