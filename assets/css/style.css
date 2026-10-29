@@ -306,6 +306,7 @@ body.menu-open { overflow: hidden; }
 .hero__lead { font-size: clamp(1rem, .95rem + .3vw, 1.15rem); color: #d2dce7; max-width: 600px; margin-bottom: 30px; }
 .hero__actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
 .hero__grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 48px; align-items: end; }
+.hero__grid + .stats { margin-top: clamp(40px, 5vw, 76px); }
 
 /* Du keliai: užsakovas / darbuotojas (Salient: Fancy Box „Hover Color“ 2 kolonos) */
 .paths { display: grid; gap: 14px; }
