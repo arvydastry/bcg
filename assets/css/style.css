@@ -373,6 +373,9 @@ body.menu-open { overflow: hidden; }
 .chip--teal { background: var(--teal-soft); color: var(--teal); border-color: #BFE2DF; }
 .chip--amber { background: var(--amber-soft); color: #8A5A0E; border-color: #F3D9A8; }
 .chip--navy { background: rgba(255, 255, 255, .08); color: #e4ebf3; border-color: rgba(255, 255, 255, .18); }
+.chip--flag { padding-left: 6px; gap: 7px; }
+.chip__flag { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--white); transition: transform .4s var(--ease); }
+.chip--flag:hover .chip__flag { transform: scale(1.15) rotate(-8deg); }
 .duo__card--bcg { --accent: var(--blue); }
 .duo__card--skanlika { --accent: var(--teal); }
 .duo__card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--accent); z-index: 3; }
