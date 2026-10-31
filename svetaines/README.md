@@ -1,8 +1,13 @@
 # Dvi atskiros svetainės: Baltic Contracting Group ir Skanlika
 
 Klientas nusprendė, kad dvi įmonės turi būti atskirtos ir turėti **dvi atskiras svetaines**. Šiame aplanke – abiejų svetainių
-demo maketai, padaryti iš bendro maketo (`../`). Darbas **lokalus**: niekas necommitinta ir nekelta į GitHub. Bendras maketas
-`https://arvydastry.github.io/bcg/` lieka toks, koks buvo.
+demo maketai, padaryti iš bendro maketo (`../`).
+
+**Demo internete:** https://arvydastry.github.io/bcg/ – įmonės pasirinkimas, toliau
+[BCG](https://arvydastry.github.io/bcg/bcg/) ir [Skanlika](https://arvydastry.github.io/bcg/skanlika/). Gidas –
+https://arvydastry.github.io/bcg/salient-gidas.html. Publikuoja `.github/workflows/pages.yml` po kiekvieno `git push` į `main`
+(surenka abi svetaines ir kelia tik sugeneruotus puslapius su `assets`). Senas bendras maketas šaknyje liko repozitorijoje,
+bet nebepublikuojamas.
 
 ## Peržiūra
 
@@ -20,7 +25,7 @@ atskirai, kaip ji veiks savo domene: `.claude/launch.json` → `bcg-svetaine` (8
 | `build.py` | Surenka abi svetaines: `python3 svetaines/build.py`, viena – `python3 svetaines/build.py skanlika` |
 | `bendra/assets/` | Bendra dizaino sistema: `style.css`, puslapių `p-*.css`, `main.js`, `p-karjera.js`, šalių vėliavos |
 | `bcg/`, `skanlika/` | Savarankiška svetainė: `_parts/` (head, antraštė, poraštė), `_body/` (6 puslapių turinys), `assets/` (bendri failai nukopijuojami build metu + savo logotipai, `theme.css`, sertifikatai), sugeneruoti `*.html` |
-| `index.html` | Pasirinkimo kortelė lokaliai peržiūrai, į produkciją nekeliama |
+| `index.html` | Įmonės pasirinkimo puslapis (demo pradžia), į galutines svetaines nekeliamas |
 | `_brief/AGENTAMS.md` | Atskyrimo taisyklės ir kiekvienos įmonės faktai |
 
 Build kiekvieną kartą patikrina nuorodas, id, paveikslėlius, h1 ir **ar puslapyje neminima kita įmonė** (pavadinimas, el. paštas,
