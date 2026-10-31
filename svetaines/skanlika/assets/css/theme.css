@@ -1,0 +1,51 @@
+/* Skanlika: prekės ženklo spalvos. Pagrindinė spalva – jūros žalsvai mėlyna (pasiūlymas, tikslinti su klientu).
+   Kraunama po style.css: visi mygtukai, nuorodos, ikonos ir akcentai, kurie pagal nutylėjimą mėlyni, tampa šios spalvos. */
+:root {
+  --blue: #0F7C7A;
+  --blue-deep: #0B5F5D;
+  --blue-rgb: 15, 124, 122;
+  --blue-soft: #D3ECEA;
+  --blue-soft-2: #EAF6F5;
+  --logo-h: 30px;
+  --logo-h-footer: 36px;
+}
+
+/* ---------- Skanlika: trys veiklos sritys (pradžios kortelės ir sričių skirtukai) ----------
+   style.css .sectors tinklelis skirtas 5 kortelėms (3+2); Skanlika turi 3 sritis – visos vienodo pločio. */
+@media (min-width: 901px) {
+  .sectors .sector, .sectors .sector:nth-child(1), .sectors .sector:nth-child(2) { grid-column: span 2; min-height: 440px; }
+}
+@media (max-width: 900px) {
+  .sectors .sector:nth-child(3) { grid-column: 1 / -1; }
+}
+/* p-veiklos-sritys.css kraunamas po theme.css, todėl selektoriai stipresni (5 skirtukų tinklelis -> 3) */
+.section .sector-tabs { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 1100px) and (min-width: 641px) {
+  .sector-tabs .sector-tab__text small { display: block; }
+}
+@media (max-width: 900px) {
+  .section .sector-tabs { grid-template-columns: repeat(3, 1fr); }
+  .sector-tabs > .sector-tab, .sector-tabs > .sector-tab:nth-child(n+4) { grid-column: auto; }
+}
+@media (max-width: 640px) {
+  .section .sector-tabs { grid-template-columns: 1fr; }
+  .sector-tabs > .sector-tab, .sector-tabs > .sector-tab:last-child { grid-column: auto; }
+}
+/* Sričių panelėse rinkos rodomos vėliavų žymomis */
+.sector-panel__top .chip--flag { font-weight: 600; }
+
+/* ---------- Skanlika: atitikties kortelės vietoje sertifikatų logotipų (.certs) ---------- */
+.cert .cert__icon { width: 52px; height: 44px; display: grid; place-items: center; font-size: 1.9rem; color: var(--blue); transition: transform .45s var(--ease), color .3s; }
+.cert:hover .cert__icon { transform: translateY(-2px) scale(1.06); color: var(--amber-deep); }
+.cert .demo-note { margin-left: 0; }
+.certs .cert { align-content: start; }
+
+/* ---------- Skanlika: įmonės blokas pradžioje (vietoje dviejų įmonių kortelių) ---------- */
+.company__media { position: relative; }
+.company__media .duo__year { z-index: 3; }
+.company__body { display: grid; gap: 18px; }
+.company__body h2, .company__body .lead { margin: 0; }
+.company__body .duo-note { margin-top: 4px; }
+
+/* ---------- Skanlika: pavyzdinių skelbimų atlyginimas su žyma „tikslinama“ (žyma po suma, kad liktų vietos pavadinimui) ---------- */
+.job__pay .demo-note { display: inline-block; margin: 4px 0 0; font-family: var(--f-body); font-weight: 500; }

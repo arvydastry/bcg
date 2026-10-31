@@ -1,0 +1,64 @@
+/* Baltic Contracting Group: prekės ženklo spalvos (BCG mėlyna iš logotipo). Kraunama po style.css. */
+:root {
+  --blue: #1B4E9B;
+  --blue-deep: #143C78;
+  --blue-rgb: 27, 78, 155;
+  --blue-soft: #DCE6F6;
+  --blue-soft-2: #EDF2FA;
+  --logo-h: 28px;
+  --logo-h-footer: 32px;
+}
+
+/* =========================================================================
+   BCG svetainės puslapių pataisos (tik šiai svetainei; rašoma failo gale).
+   ========================================================================= */
+
+/* „Kas mes“ (index.html#imones): viena įmonė – nuotrauka su logotipu + tekstas, rinkos su vėliavomis, rekvizitai */
+.company__media { box-shadow: var(--sh-2); }
+.company__media .px { position: absolute; inset: -8% 0; }
+.company__media .px img { height: 100%; }
+.company__media::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(12, 30, 51, 0) 50%, rgba(12, 30, 51, .78)); }
+.company__logo { position: absolute; left: 28px; bottom: 26px; z-index: 2; }
+.company__logo img { height: 34px; width: auto; }
+.company__body .duo__markets { margin: 24px 0 20px; }
+.company__body .duo__facts { margin: 0 0 28px; }
+
+/* Registracija ir rekvizitai (apie-mus.html#registracija): tekstas + nuotrauka, dešinėje rekvizitų kortelė */
+.reg__media { margin-top: 28px; }
+.reg__media .px { position: absolute; inset: -8% 0; }
+.reg__media .px img { height: 100%; }
+.reg-card { position: relative; overflow: clip; display: grid; gap: 20px; padding: 32px 32px 30px; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--sh-2); }
+.reg-card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--blue); }
+.reg-card__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.reg-card__head img { height: 28px; width: auto; }
+.reg-card__list { margin: 0; display: grid; }
+.reg-card__list div { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 11px 0; border-bottom: 1px dashed var(--line); }
+.reg-card__list div:last-child { border-bottom: 0; }
+.reg-card__list dt { color: var(--muted); font-size: .9rem; }
+.reg-card__list dd { margin: 0; font-weight: 600; color: var(--ink); }
+.reg-card__list dd small { display: block; font-weight: 400; color: var(--muted); font-size: .84rem; }
+.reg-card__list a { color: inherit; }
+.reg-card__list a:hover { color: var(--blue); }
+
+/* Rekvizitų lentelė (kontaktai.html#rekvizitai): viena įmonė – eilutės „rekvizitas | reikšmė“ */
+.reg-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 20px; align-items: start; }
+.reg-grid > * { min-width: 0; }
+.compare--reg th[scope="row"] { width: 32%; }
+.compare--reg td { font-weight: 500; }
+.contact-card__facts a { font-weight: 600; color: var(--blue); }
+.contact-card__facts a i { font-size: 1rem; }
+
+@media (max-width: 900px) {
+  .company__media { aspect-ratio: 16 / 11; }
+  .reg-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .company__media { aspect-ratio: 4 / 3; }
+  .company__logo { left: 20px; bottom: 18px; }
+  .company__logo img { height: 28px; }
+  .company__body .duo__facts { grid-template-columns: 1fr 1fr; }
+  .reg-card { padding: 26px 20px 22px; }
+  .reg-card__list div { grid-template-columns: 1fr; gap: 2px; }
+  .compare--reg th, .compare--reg td { padding: 12px 14px; }
+  .compare--reg th[scope="row"] { width: 42%; font-size: .9rem; }
+}

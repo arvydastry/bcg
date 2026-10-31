@@ -1,0 +1,52 @@
+# Publikuoja demo į GitHub Pages: pradžioje – įmonės pasirinkimas, /bcg/ ir /skanlika/ – atskiros svetainės.
+# Publikuojami tik surinkti puslapiai ir jų assets (be _body, _parts, build.py). Bendras senas maketas šaknyje nebepublikuojamas.
+name: Demo svetainės į GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Surinkti abi svetaines
+        run: python3 svetaines/build.py
+
+      - name: Paruošti publikuojamus failus
+        run: |
+          mkdir -p _site/assets/img
+          cp svetaines/index.html _site/
+          cp salient-gidas.html _site/
+          cp assets/img/favicon.svg _site/assets/img/
+          for s in bcg skanlika; do
+            mkdir -p "_site/$s"
+            cp svetaines/$s/*.html "_site/$s/"
+            cp -R "svetaines/$s/assets" "_site/$s/"
+          done
+          touch _site/.nojekyll
+          find _site -type f | sort | head -80
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
